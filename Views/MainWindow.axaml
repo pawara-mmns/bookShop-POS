@@ -27,12 +27,12 @@
                 <StackPanel Spacing="16">
                     <StackPanel Spacing="6">
                         <TextBlock Text="Email Address" FontWeight="SemiBold" FontSize="13" Foreground="#374151" />
-                        <TextBox x:Name="UsernameBox" Text="admin@novabooks.com" CornerRadius="6" VerticalContentAlignment="Center" MinHeight="42" Padding="12,0" Background="White" BorderBrush="#D1D5DB" />
+                        <TextBox x:Name="UsernameBox" Watermark="Enter your email" CornerRadius="6" VerticalContentAlignment="Center" MinHeight="42" Padding="12,0" Background="White" BorderBrush="#D1D5DB" />
                     </StackPanel>
 
                     <StackPanel Spacing="6">
                         <TextBlock Text="Password" FontWeight="SemiBold" FontSize="13" Foreground="#374151" />
-                        <TextBox x:Name="PasswordBox" Text="password" PasswordChar="•" CornerRadius="6" VerticalContentAlignment="Center" MinHeight="42" Padding="12,0" Background="White" BorderBrush="#D1D5DB" FontFamily="Arial" />
+                        <TextBox x:Name="PasswordBox" Watermark="Enter your password" PasswordChar="•" CornerRadius="6" VerticalContentAlignment="Center" MinHeight="42" Padding="12,0" Background="White" BorderBrush="#D1D5DB" FontFamily="Arial" />
                     </StackPanel>
 
                     <Grid ColumnDefinitions="*, Auto" Margin="0,4">
