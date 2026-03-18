@@ -1,0 +1,62 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="bookShop.Views.DashboardWindow"
+        Title="Dashboard"
+        Width="900"
+        Height="500"
+        WindowStartupLocation="CenterScreen"
+        Background="#0F172A">
+
+    <Grid RowDefinitions="70,*">
+        <Border Background="#1E293B" Padding="20">
+            <TextBlock Text="BookShop Dashboard"
+                       Foreground="White"
+                       FontSize="28"
+                       FontWeight="Bold"
+                       VerticalAlignment="Center"/>
+        </Border>
+
+        <Grid Grid.Row="1" ColumnDefinitions="220,*">
+            <Border Background="#111827" Padding="20">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Menu"
+                               Foreground="White"
+                               FontSize="22"
+                               FontWeight="Bold"/>
+
+                    <Button Content="Dashboard" Height="40"/>
+                    <Button Content="Books" Height="40"/>
+                    <Button Content="Orders" Height="40"/>
+                    <Button Content="Customers" Height="40"/>
+                </StackPanel>
+            </Border>
+
+            <Grid Grid.Column="1" Background="#F8FAFC">
+                <Border Margin="25"
+                        Padding="25"
+                        CornerRadius="18"
+                        Background="White">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="Welcome to BookShop System"
+                                   FontSize="26"
+                                   FontWeight="Bold"
+                                   Foreground="#0F172A"/>
+
+                        <TextBlock Text="You have successfully logged in."
+                                   FontSize="16"
+                                   Foreground="#475569"/>
+
+                        <Border Background="#E2E8F0"
+                                CornerRadius="14"
+                                Padding="18"
+                                Margin="0,10,0,0">
+                            <TextBlock Text="This is your dashboard page. You can add books, manage orders, and control the system from here."
+                                       TextWrapping="Wrap"
+                                       Foreground="#1E293B"/>
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
