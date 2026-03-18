@@ -7,9 +7,11 @@ public class AppDbContext : DbContext
 {
     public DbSet<User> Users => Set<User>();
 
+    private const string ConnectionString = "server=localhost;port=3306;database=bookshopdb;user=root;password=1234";
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var connectionString = "server=localhost;port=3306;database=bookshopdb;user=root;password=1234";
-        optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+        optionsBuilder.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString),
+            mysqlOptions => mysqlOptions.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName));
     }
 }
