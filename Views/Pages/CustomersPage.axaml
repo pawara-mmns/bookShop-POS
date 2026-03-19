@@ -15,7 +15,7 @@
                 <TextBlock Text="Customers" FontSize="22" FontWeight="Bold" Foreground="#111827" VerticalAlignment="Center"/>
             </StackPanel>
 
-            <Button Grid.Column="1" Content="+  Add New" Background="#4F46E5" Foreground="White" CornerRadius="8" Padding="16,10" FontWeight="SemiBold" />
+            <Button Grid.Column="1" Content="+  Add New" Background="#4F46E5" Foreground="White" CornerRadius="8" Padding="16,10" FontWeight="SemiBold" Click="AddCustomer_Click" />
         </Grid>
 
         <!-- Card -->
@@ -75,3 +75,4 @@
 
     </Grid>
 </UserControl>
+

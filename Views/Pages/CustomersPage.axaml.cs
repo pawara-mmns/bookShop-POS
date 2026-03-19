@@ -40,6 +40,22 @@ public partial class CustomersPage : UserControl
         }
     }
 
+    private async void AddCustomer_Click(object? sender, RoutedEventArgs e)
+    {
+        var owner = TopLevel.GetTopLevel(this) as Window;
+        var dialog = new AddCustomerWindow();
+
+        if (owner is null)
+        {
+            dialog.Show();
+            return;
+        }
+
+        bool added = await dialog.ShowDialog<bool>(owner);
+        if (added)
+            LoadCustomers();
+    }
+
     private async void EditCustomer_Click(object? sender, RoutedEventArgs e)
     {
         if (sender is not Button button)
