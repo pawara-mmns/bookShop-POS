@@ -11,7 +11,7 @@
     <Border Background="White" CornerRadius="12" BorderBrush="#E5E7EB" BorderThickness="1" Margin="16" Padding="20">
         <Grid RowDefinitions="Auto,*,Auto" RowSpacing="16">
 
-            <TextBlock Text="Delete Customer" FontSize="18" FontWeight="Bold" Foreground="#111827" />
+            <TextBlock x:Name="HeadingText" Text="Delete Customer" FontSize="18" FontWeight="Bold" Foreground="#111827" />
 
             <StackPanel Grid.Row="1" Spacing="6">
                 <TextBlock x:Name="MessageText" Text="Are you sure you want to delete this customer?" FontSize="14" Foreground="#374151" TextWrapping="Wrap" />
