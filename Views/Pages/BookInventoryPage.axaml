@@ -1,11 +1,79 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="bookShop.Views.Pages.BookInventoryPage">
+             xmlns:models="clr-namespace:bookShop.Models"
+             x:Class="bookShop.Views.Pages.BookInventoryPage"
+             Background="Transparent">
 
-    <Border Background="White" CornerRadius="12" BorderBrush="#E5E7EB" BorderThickness="1" Margin="32" Padding="24">
-        <StackPanel Spacing="8">
-            <TextBlock Text="Book Inventory" FontSize="22" FontWeight="Bold" Foreground="#111827" />
-            <TextBlock Text="This section is ready for UI wiring." FontSize="14" Foreground="#6B7280" />
-        </StackPanel>
-    </Border>
+    <Grid RowDefinitions="Auto,*" Margin="32">
+
+        <!-- Header Row -->
+        <Grid Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,16">
+            <StackPanel Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                <Border Background="#E0E7FF" Width="36" Height="36" CornerRadius="10">
+                    <TextBlock Text="📖" Foreground="#4F46E5" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <TextBlock Text="Book Inventory" FontSize="22" FontWeight="Bold" Foreground="#111827" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <Button Grid.Column="1" Content="+  Add New" Background="#4F46E5" Foreground="White" CornerRadius="8" Padding="16,10" FontWeight="SemiBold" Click="AddBook_Click" />
+        </Grid>
+
+        <!-- Card -->
+        <Border Grid.Row="1" Background="White" CornerRadius="12" BorderBrush="#E5E7EB" BorderThickness="1">
+            <Grid RowDefinitions="Auto,Auto,*">
+
+                <!-- Search Row (UI only for now) -->
+                <Border Grid.Row="0" Background="Transparent" BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="16">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <TextBox x:Name="SearchBox" Watermark="Search books..." CornerRadius="8" Background="White" BorderBrush="#D1D5DB" Padding="12,10" />
+                        <Button Grid.Column="1" Content="☰  Filters" Background="White" Foreground="#111827" BorderBrush="#D1D5DB" BorderThickness="1" CornerRadius="8" Padding="14,10" FontWeight="SemiBold" />
+                    </Grid>
+                </Border>
+
+                <!-- Table Header -->
+                <Border Grid.Row="1" Background="Transparent" BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="16,12">
+                    <Grid ColumnDefinitions="1.3*,2.2*,1.7*,1.3*,0.9*,1.1*,Auto" ColumnSpacing="12">
+                        <TextBlock Text="ISBN" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                        <TextBlock Grid.Column="1" Text="TITLE" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                        <TextBlock Grid.Column="2" Text="AUTHOR" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                        <TextBlock Grid.Column="3" Text="CATEGORY" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                        <TextBlock Grid.Column="4" Text="STOCK" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                        <TextBlock Grid.Column="5" Text="PRICE" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                        <TextBlock Grid.Column="6" Text="ACTIONS" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" HorizontalAlignment="Right" />
+                    </Grid>
+                </Border>
+
+                <!-- Table Body -->
+                <ScrollViewer Grid.Row="2" Padding="16">
+                    <ItemsControl x:Name="BooksList">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="models:Books">
+                                <Border Background="Transparent" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1" Padding="0,10">
+                                    <Grid ColumnDefinitions="1.3*,2.2*,1.7*,1.3*,0.9*,1.1*,Auto" ColumnSpacing="12">
+                                        <TextBlock Text="{Binding ISBN}" FontSize="13" FontWeight="SemiBold" Foreground="#111827" />
+                                        <TextBlock Grid.Column="1" Text="{Binding Title}" FontSize="13" FontWeight="SemiBold" Foreground="#111827" />
+                                        <TextBlock Grid.Column="2" Text="{Binding Author}" FontSize="13" Foreground="#6B7280" />
+                                        <TextBlock Grid.Column="3" Text="{Binding Category}" FontSize="13" Foreground="#6B7280" />
+                                        <TextBlock Grid.Column="4" Text="{Binding Stock}" FontSize="13" Foreground="#6B7280" />
+                                        <TextBlock Grid.Column="5" Text="{Binding Price}" FontSize="13" Foreground="#6B7280" />
+
+                                        <StackPanel Grid.Column="6" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
+                                            <Button Background="Transparent" BorderThickness="0" Padding="6" Click="EditBook_Click" ToolTip.Tip="Edit">
+                                                <TextBlock Text="✎" Foreground="#9CA3AF" FontSize="16" />
+                                            </Button>
+                                            <Button Background="Transparent" BorderThickness="0" Padding="6" Click="DeleteBook_Click" ToolTip.Tip="Delete">
+                                                <TextBlock Text="🗑" Foreground="#9CA3AF" FontSize="16" />
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+            </Grid>
+        </Border>
+
+    </Grid>
 </UserControl>
