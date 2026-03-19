@@ -55,7 +55,7 @@
                                         <TextBlock Grid.Column="2" Text="{Binding Author}" FontSize="13" Foreground="#6B7280" />
                                         <TextBlock Grid.Column="3" Text="{Binding Category}" FontSize="13" Foreground="#6B7280" />
                                         <TextBlock Grid.Column="4" Text="{Binding Stock}" FontSize="13" Foreground="#6B7280" />
-                                        <TextBlock Grid.Column="5" Text="{Binding Price}" FontSize="13" Foreground="#6B7280" />
+                                        <TextBlock Grid.Column="5" Text="{Binding Price, StringFormat={}{0:0.00}}" FontSize="13" Foreground="#6B7280" />
 
                                         <StackPanel Grid.Column="6" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
                                             <Button Background="Transparent" BorderThickness="0" Padding="6" Click="EditBook_Click" ToolTip.Tip="Edit">
