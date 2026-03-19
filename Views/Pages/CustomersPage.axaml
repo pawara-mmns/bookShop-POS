@@ -32,12 +32,13 @@
 
                 <!-- Table Header -->
                 <Border Grid.Row="1" Background="Transparent" BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="16,12">
-                    <Grid ColumnDefinitions="80,2*,2.5*,1.5*,2*" ColumnSpacing="12">
+                    <Grid ColumnDefinitions="80,2*,2.5*,1.5*,2*,Auto" ColumnSpacing="12">
                         <TextBlock Text="ID" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
                         <TextBlock Grid.Column="1" Text="NAME" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
                         <TextBlock Grid.Column="2" Text="EMAIL" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
                         <TextBlock Grid.Column="3" Text="PHONE" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
                         <TextBlock Grid.Column="4" Text="ADDRESS" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                        <TextBlock Grid.Column="5" Text="ACTIONS" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" HorizontalAlignment="Right" />
                     </Grid>
                 </Border>
 
@@ -47,12 +48,21 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="models:Customers">
                                 <Border Background="Transparent" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1" Padding="0,10">
-                                    <Grid ColumnDefinitions="80,2*,2.5*,1.5*,2*" ColumnSpacing="12">
+                                    <Grid ColumnDefinitions="80,2*,2.5*,1.5*,2*,Auto" ColumnSpacing="12">
                                         <TextBlock Text="{Binding CustomerId}" FontSize="13" FontWeight="SemiBold" Foreground="#111827" />
                                         <TextBlock Grid.Column="1" Text="{Binding Name}" FontSize="13" FontWeight="SemiBold" Foreground="#111827" />
                                         <TextBlock Grid.Column="2" Text="{Binding Email}" FontSize="13" Foreground="#6B7280" />
                                         <TextBlock Grid.Column="3" Text="{Binding Phone}" FontSize="13" Foreground="#6B7280" />
                                         <TextBlock Grid.Column="4" Text="{Binding Address}" FontSize="13" Foreground="#6B7280" TextWrapping="NoWrap" />
+
+                                        <StackPanel Grid.Column="5" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
+                                            <Button Background="Transparent" BorderThickness="0" Padding="6" Click="EditCustomer_Click" ToolTip.Tip="Edit">
+                                                <TextBlock Text="✎" Foreground="#9CA3AF" FontSize="16" />
+                                            </Button>
+                                            <Button Background="Transparent" BorderThickness="0" Padding="6" Click="DeleteCustomer_Click" ToolTip.Tip="Delete">
+                                                <TextBlock Text="🗑" Foreground="#9CA3AF" FontSize="16" />
+                                            </Button>
+                                        </StackPanel>
                                     </Grid>
                                 </Border>
                             </DataTemplate>
