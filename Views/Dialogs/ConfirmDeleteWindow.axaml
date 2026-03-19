@@ -1,0 +1,28 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="bookShop.Views.Dialogs.ConfirmDeleteWindow"
+        Title="Confirm Delete"
+        Width="420"
+        Height="220"
+        WindowStartupLocation="CenterOwner"
+        Background="#F9FAFB"
+        CanResize="False">
+
+    <Border Background="White" CornerRadius="12" BorderBrush="#E5E7EB" BorderThickness="1" Margin="16" Padding="20">
+        <Grid RowDefinitions="Auto,*,Auto" RowSpacing="16">
+
+            <TextBlock Text="Delete Customer" FontSize="18" FontWeight="Bold" Foreground="#111827" />
+
+            <StackPanel Grid.Row="1" Spacing="6">
+                <TextBlock x:Name="MessageText" Text="Are you sure you want to delete this customer?" FontSize="14" Foreground="#374151" TextWrapping="Wrap" />
+                <TextBlock Text="This action cannot be undone." FontSize="13" Foreground="#6B7280" />
+            </StackPanel>
+
+            <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Button Grid.Column="0" Content="Cancel" Background="White" Foreground="#111827" BorderBrush="#D1D5DB" BorderThickness="1" CornerRadius="8" Padding="14,10" FontWeight="SemiBold" Click="Cancel_Click" />
+                <Button Grid.Column="1" Content="Delete" Background="#EF4444" Foreground="White" CornerRadius="8" Padding="14,10" FontWeight="SemiBold" Click="Delete_Click" />
+            </Grid>
+
+        </Grid>
+    </Border>
+</Window>
