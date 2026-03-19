@@ -1,0 +1,48 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="bookShop.Views.Dialogs.EditCustomerWindow"
+        Title="Edit Customer"
+        Width="460"
+        Height="520"
+        WindowStartupLocation="CenterOwner"
+        Background="#F9FAFB"
+        CanResize="False">
+
+    <Border Background="White" CornerRadius="12" BorderBrush="#E5E7EB" BorderThickness="1" Margin="16" Padding="20">
+        <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="14">
+
+            <TextBlock Grid.Row="0" Text="Edit Customer" FontSize="20" FontWeight="Bold" Foreground="#111827" />
+            <TextBlock Grid.Row="1" x:Name="CustomerIdText" Text="" FontSize="13" Foreground="#6B7280" />
+
+            <StackPanel Grid.Row="2" Spacing="12">
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Name" FontWeight="SemiBold" FontSize="13" Foreground="#374151" />
+                    <TextBox x:Name="NameBox" CornerRadius="8" MinHeight="40" Padding="12,8" Background="White" BorderBrush="#D1D5DB" />
+                </StackPanel>
+
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Email" FontWeight="SemiBold" FontSize="13" Foreground="#374151" />
+                    <TextBox x:Name="EmailBox" CornerRadius="8" MinHeight="40" Padding="12,8" Background="White" BorderBrush="#D1D5DB" />
+                </StackPanel>
+
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Phone" FontWeight="SemiBold" FontSize="13" Foreground="#374151" />
+                    <TextBox x:Name="PhoneBox" CornerRadius="8" MinHeight="40" Padding="12,8" Background="White" BorderBrush="#D1D5DB" />
+                </StackPanel>
+
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Address" FontWeight="SemiBold" FontSize="13" Foreground="#374151" />
+                    <TextBox x:Name="AddressBox" CornerRadius="8" MinHeight="40" Padding="12,8" Background="White" BorderBrush="#D1D5DB" />
+                </StackPanel>
+
+                <TextBlock x:Name="ErrorText" Text="" Foreground="#EF4444" FontSize="13" TextWrapping="Wrap" />
+            </StackPanel>
+
+            <Grid Grid.Row="3" ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Button Grid.Column="0" Content="Cancel" Background="White" Foreground="#111827" BorderBrush="#D1D5DB" BorderThickness="1" CornerRadius="8" Padding="14,10" FontWeight="SemiBold" Click="Cancel_Click" />
+                <Button Grid.Column="1" Content="Save" Background="#4F46E5" Foreground="White" CornerRadius="8" Padding="14,10" FontWeight="SemiBold" Click="Save_Click" />
+            </Grid>
+
+        </Grid>
+    </Border>
+</Window>
