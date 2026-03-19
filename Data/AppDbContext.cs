@@ -6,6 +6,7 @@ namespace bookShop.Data;
 public class AppDbContext : DbContext
 {
     public DbSet<User> Users => Set<User>();
+    public DbSet<Books> Books => Set<Books>();
 
     private const string ConnectionString = "server=localhost;port=3306;database=bookshopdb;user=root;password=1234";
 
