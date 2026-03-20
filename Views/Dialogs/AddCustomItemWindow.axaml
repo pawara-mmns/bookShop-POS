@@ -1,0 +1,45 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="bookShop.Views.Dialogs.AddCustomItemWindow"
+        Title="Add Custom Item"
+        Width="460"
+        Height="420"
+        WindowStartupLocation="CenterOwner"
+        Background="#F9FAFB"
+        CanResize="False">
+
+    <Border Background="White" CornerRadius="12" BorderBrush="#E5E7EB" BorderThickness="1" Margin="16" Padding="20">
+        <Grid RowDefinitions="Auto,*,Auto" RowSpacing="14">
+
+            <TextBlock Grid.Row="0" Text="Add Custom Item" FontSize="20" FontWeight="Bold" Foreground="#111827" />
+
+            <StackPanel Grid.Row="1" Spacing="12">
+
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Item Name" FontWeight="SemiBold" FontSize="13" Foreground="#374151" />
+                    <TextBox x:Name="ItemNameBox" CornerRadius="8" MinHeight="40" Padding="12,8" Background="White" BorderBrush="#D1D5DB" />
+                </StackPanel>
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <StackPanel Grid.Column="0" Spacing="6">
+                        <TextBlock Text="Unit Price (LKR)" FontWeight="SemiBold" FontSize="13" Foreground="#374151" />
+                        <TextBox x:Name="PriceBox" CornerRadius="8" MinHeight="40" Padding="12,8" Background="White" BorderBrush="#D1D5DB" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Spacing="6">
+                        <TextBlock Text="Quantity" FontWeight="SemiBold" FontSize="13" Foreground="#374151" />
+                        <TextBox x:Name="QtyBox" Text="1" CornerRadius="8" MinHeight="40" Padding="12,8" Background="White" BorderBrush="#D1D5DB" />
+                    </StackPanel>
+                </Grid>
+
+                <TextBlock x:Name="ErrorText" Text="" Foreground="#EF4444" FontSize="13" TextWrapping="Wrap" />
+            </StackPanel>
+
+            <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Button Grid.Column="0" Content="Cancel" Background="White" Foreground="#111827" BorderBrush="#D1D5DB" BorderThickness="1" CornerRadius="8" Padding="14,10" FontWeight="SemiBold" Click="Cancel_Click" />
+                <Button Grid.Column="1" Content="Add" Background="#4F46E5" Foreground="White" CornerRadius="8" Padding="14,10" FontWeight="SemiBold" Click="Add_Click" />
+            </Grid>
+
+        </Grid>
+    </Border>
+</Window>
