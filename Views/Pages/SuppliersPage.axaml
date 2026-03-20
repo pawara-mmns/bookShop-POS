@@ -1,0 +1,77 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:models="clr-namespace:bookShop.Models"
+             x:Class="bookShop.Views.Pages.SuppliersPage"
+             Background="Transparent">
+
+    <Grid RowDefinitions="Auto,*" Margin="32">
+
+        <!-- Header Row -->
+        <Grid Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,16">
+            <StackPanel Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                <Border Background="#E0E7FF" Width="36" Height="36" CornerRadius="10">
+                    <TextBlock Text="🚚" Foreground="#4F46E5" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <TextBlock Text="Suppliers" FontSize="22" FontWeight="Bold" Foreground="#111827" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <Button Grid.Column="1" Content="+  Add New" Background="#4F46E5" Foreground="White" CornerRadius="8" Padding="16,10" FontWeight="SemiBold" Click="AddSupplier_Click" />
+        </Grid>
+
+        <!-- Card -->
+        <Border Grid.Row="1" Background="White" CornerRadius="12" BorderBrush="#E5E7EB" BorderThickness="1">
+            <Grid RowDefinitions="Auto,Auto,*">
+
+                <!-- Search Row (UI only) -->
+                <Border Grid.Row="0" Background="Transparent" BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="16">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <TextBox x:Name="SearchBox" Watermark="Search suppliers..." CornerRadius="8" Background="White" BorderBrush="#D1D5DB" Padding="12,10" />
+                        <Button Grid.Column="1" Content="☰  Filters" Background="White" Foreground="#111827" BorderBrush="#D1D5DB" BorderThickness="1" CornerRadius="8" Padding="14,10" FontWeight="SemiBold" />
+                    </Grid>
+                </Border>
+
+                <!-- Table Header -->
+                <Border Grid.Row="1" Background="Transparent" BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="16,12">
+                    <Grid ColumnDefinitions="90,2.2*,1.6*,2.5*,1.4*,Auto" ColumnSpacing="12">
+                        <TextBlock Text="ID" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                        <TextBlock Grid.Column="1" Text="COMPANY NAME" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                        <TextBlock Grid.Column="2" Text="CONTACT" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                        <TextBlock Grid.Column="3" Text="EMAIL" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                        <TextBlock Grid.Column="4" Text="PHONE" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                        <TextBlock Grid.Column="5" Text="ACTIONS" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" HorizontalAlignment="Right" />
+                    </Grid>
+                </Border>
+
+                <!-- Table Body -->
+                <ScrollViewer Grid.Row="2" Padding="16">
+                    <ItemsControl x:Name="SuppliersList">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="models:Suppliers">
+                                <Border Background="Transparent" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1" Padding="0,10">
+                                    <Grid ColumnDefinitions="90,2.2*,1.6*,2.5*,1.4*,Auto" ColumnSpacing="12">
+                                        <TextBlock Text="{Binding SupplierId, StringFormat={}{0:SUP-000}}" FontSize="13" FontWeight="SemiBold" Foreground="#111827" />
+                                        <TextBlock Grid.Column="1" Text="{Binding CompanyName}" FontSize="13" FontWeight="SemiBold" Foreground="#111827" />
+                                        <TextBlock Grid.Column="2" Text="{Binding ContactName}" FontSize="13" Foreground="#6B7280" />
+                                        <TextBlock Grid.Column="3" Text="{Binding Email}" FontSize="13" Foreground="#6B7280" />
+                                        <TextBlock Grid.Column="4" Text="{Binding Phone}" FontSize="13" Foreground="#6B7280" />
+
+                                        <StackPanel Grid.Column="5" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
+                                            <Button Background="Transparent" BorderThickness="0" Padding="6" Click="EditSupplier_Click" ToolTip.Tip="Edit">
+                                                <TextBlock Text="✎" Foreground="#9CA3AF" FontSize="16" />
+                                            </Button>
+                                            <Button Background="Transparent" BorderThickness="0" Padding="6" Click="DeleteSupplier_Click" ToolTip.Tip="Delete">
+                                                <TextBlock Text="🗑" Foreground="#9CA3AF" FontSize="16" />
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+            </Grid>
+        </Border>
+
+    </Grid>
+</UserControl>
