@@ -1,0 +1,57 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:bookShop.Views.Pages"
+             x:Class="bookShop.Views.Pages.OrdersPage"
+             Background="Transparent">
+
+    <Grid RowDefinitions="Auto,*" Margin="32">
+
+        <!-- Header Row -->
+        <Grid Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,16">
+            <StackPanel Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                <Border Background="#E0E7FF" Width="36" Height="36" CornerRadius="10">
+                    <TextBlock Text="🧾" Foreground="#4F46E5" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <TextBlock Text="Orders" FontSize="22" FontWeight="Bold" Foreground="#111827" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Card: Table Only -->
+        <Border Grid.Row="1" Background="White" CornerRadius="12" BorderBrush="#E5E7EB" BorderThickness="1">
+            <Grid RowDefinitions="Auto,*">
+
+                <!-- Table Header -->
+                <Border Grid.Row="0" Background="Transparent" BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="16,12">
+                    <Grid ColumnDefinitions="1.1*,1.1*,1.4*,1.2*,1.2*" ColumnSpacing="12">
+                        <TextBlock Text="ORDER ID" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                        <TextBlock Grid.Column="1" Text="CUSTOMER ID" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                        <TextBlock Grid.Column="2" Text="DATE" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                        <TextBlock Grid.Column="3" Text="PAYMENT METHOD" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                        <TextBlock Grid.Column="4" Text="SUBTOTAL (LKR)" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" HorizontalAlignment="Right" />
+                    </Grid>
+                </Border>
+
+                <!-- Table Body -->
+                <ScrollViewer Grid.Row="1" Padding="16">
+                    <ItemsControl x:Name="OrdersList">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="local:OrderRow">
+                                <Border Background="Transparent" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1" Padding="0,10">
+                                    <Grid ColumnDefinitions="1.1*,1.1*,1.4*,1.2*,1.2*" ColumnSpacing="12">
+                                        <TextBlock Text="{Binding DisplayOrderId}" FontSize="13" FontWeight="SemiBold" Foreground="#111827" />
+                                        <TextBlock Grid.Column="1" Text="{Binding DisplayCustomerId}" FontSize="13" Foreground="#6B7280" />
+                                        <TextBlock Grid.Column="2" Text="{Binding DisplayDate}" FontSize="13" Foreground="#6B7280" />
+                                        <TextBlock Grid.Column="3" Text="{Binding PaymentMethod}" FontSize="13" Foreground="#6B7280" />
+                                        <TextBlock Grid.Column="4" Text="{Binding DisplaySubtotal}" FontSize="13" Foreground="#6B7280" HorizontalAlignment="Right" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+            </Grid>
+        </Border>
+
+    </Grid>
+</UserControl>
