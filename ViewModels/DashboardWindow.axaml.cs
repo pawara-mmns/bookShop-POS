@@ -10,6 +10,8 @@ public partial class DashboardWindow : Window
     {
         InitializeComponent();
 
+        global::bookShop.AppIcon.Apply(this);
+
         NavigateTo("Dashboard");
     }
 

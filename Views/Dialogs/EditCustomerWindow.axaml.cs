@@ -14,6 +14,7 @@ public partial class EditCustomerWindow : Window
     public EditCustomerWindow()
     {
         InitializeComponent();
+        global::bookShop.AppIcon.Apply(this);
         _customerId = 0;
     }
 

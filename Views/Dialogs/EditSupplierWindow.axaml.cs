@@ -14,12 +14,15 @@ public partial class EditSupplierWindow : Window
     public EditSupplierWindow()
     {
         InitializeComponent();
+        global::bookShop.AppIcon.Apply(this);
         _supplierId = 0;
     }
 
     public EditSupplierWindow(Suppliers supplier)
     {
         InitializeComponent();
+
+        global::bookShop.AppIcon.Apply(this);
 
         _supplierId = supplier.SupplierId;
 

@@ -10,6 +10,8 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
+        global::bookShop.AppIcon.Apply(this);
+
         var usernameBox = this.FindControl<TextBox>("UsernameBox");
         var passwordBox = this.FindControl<TextBox>("PasswordBox");
         var loginButton = this.FindControl<Button>("LoginButton");

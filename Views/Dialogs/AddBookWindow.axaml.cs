@@ -13,6 +13,8 @@ public partial class AddBookWindow : Window
     public AddBookWindow()
     {
         InitializeComponent();
+
+        global::bookShop.AppIcon.Apply(this);
     }
 
     private void Cancel_Click(object? sender, RoutedEventArgs e)

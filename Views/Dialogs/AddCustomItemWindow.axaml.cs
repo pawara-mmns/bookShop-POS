@@ -14,6 +14,7 @@ public partial class AddCustomItemWindow : Window
     public AddCustomItemWindow()
     {
         InitializeComponent();
+        global::bookShop.AppIcon.Apply(this);
     }
 
     private void Cancel_Click(object? sender, RoutedEventArgs e)

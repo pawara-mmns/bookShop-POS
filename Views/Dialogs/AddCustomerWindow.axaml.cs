@@ -11,6 +11,8 @@ public partial class AddCustomerWindow : Window
     public AddCustomerWindow()
     {
         InitializeComponent();
+
+        global::bookShop.AppIcon.Apply(this);
     }
 
     private void Cancel_Click(object? sender, RoutedEventArgs e)

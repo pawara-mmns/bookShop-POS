@@ -15,11 +15,15 @@ public partial class EditBookWindow : Window
     public EditBookWindow()
     {
         InitializeComponent();
+
+        global::bookShop.AppIcon.Apply(this);
     }
 
     public EditBookWindow(Books book)
     {
         InitializeComponent();
+
+        global::bookShop.AppIcon.Apply(this);
 
         _isbn = book.ISBN;
 

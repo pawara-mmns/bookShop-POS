@@ -17,6 +17,8 @@ public partial class ConfirmDeleteWindow : Window
     {
         InitializeComponent();
 
+        global::bookShop.AppIcon.Apply(this);
+
         var headingText = this.FindControl<TextBlock>("HeadingText");
         if (headingText is not null)
             headingText.Text = heading;
