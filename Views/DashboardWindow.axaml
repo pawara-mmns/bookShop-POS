@@ -1,5 +1,6 @@
 <Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Svg.Controls.Skia.Avalonia"
         x:Class="bookShop.Views.DashboardWindow"
         Title="NovaBooks Dashboard"
         WindowState="Maximized"
@@ -13,12 +14,22 @@
             <Setter Property="Padding" Value="14,10"/>
         </Style>
 
+        <Style Selector="Border.nav-item svg|Svg">
+            <Setter Property="Css" Value=".icon { fill: #6B7280; }"/>
+            <Setter Property="Width" Value="16"/>
+            <Setter Property="Height" Value="16"/>
+        </Style>
+
         <Style Selector="Border.nav-item TextBlock">
             <Setter Property="Foreground" Value="#6B7280"/>
         </Style>
 
         <Style Selector="Border.nav-item.selected">
             <Setter Property="Background" Value="#F3F4F6"/>
+        </Style>
+
+        <Style Selector="Border.nav-item.selected svg|Svg">
+            <Setter Property="Css" Value=".icon { fill: #4F46E5; }"/>
         </Style>
 
         <Style Selector="Border.nav-item.selected TextBlock">
@@ -37,9 +48,7 @@
                 <Border Grid.Row="0" Padding="24,0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="12">
                         <Border Background="#4F46E5" Width="32" Height="32" CornerRadius="8" HorizontalAlignment="Center">
-                            <Viewbox Width="16" Height="16">
-                                <Path Fill="White" Data="M2,3C2,2.44772 2.44772,2 3,2H9.5C10.6046,2 11.5,2.89543 11.5,4V21C11.5,21.5523 11.0523,22 10.5,22H3C2.44772,22 2,21.5523 2,21V3ZM12.5,4C12.5,2.89543 13.3954,2 14.5,2H21C21.5523,2 22,2.44772 22,3V21C22,21.5523 21.5523,22 21,22H13.5C12.9477,22 12.5,21.5523 12.5,21V4ZM13.5,20H20V4H14.5C13.6716,4 13,4.67157 13,5.5V20.25 C13.1611,20.0886 13.3444,20 13.5,20ZM10.5,20C10.6556,20 10.8389,20.0886 11,20.25V5.5C11,4.67157 10.3284,4 9.5,4H4V20H10.5Z"/>
-                            </Viewbox>
+                            <svg:Svg Path="/Assets/Icons/book.svg" Width="16" Height="16" Css=".icon { fill: #FFFFFF; }" />
                         </Border>
                         <TextBlock Text="NovaBooks" FontSize="18" FontWeight="Bold" Foreground="#111827" VerticalAlignment="Center"/>
                     </StackPanel>
@@ -50,37 +59,37 @@
                     <StackPanel Spacing="6">
                         <Border x:Name="NavDashboard" Classes="nav-item selected" Tag="Dashboard" PointerPressed="NavItem_PointerPressed">
                             <StackPanel Orientation="Horizontal" Spacing="12">
-                                <TextBlock Text="⊞" FontSize="16" VerticalAlignment="Center"/>
+                                <svg:Svg Path="/Assets/Icons/dashboard.svg" />
                                 <TextBlock Text="Dashboard" FontSize="14" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
                         <Border x:Name="NavOrders" Classes="nav-item" Tag="Orders" PointerPressed="NavItem_PointerPressed">
                             <StackPanel Orientation="Horizontal" Spacing="12">
-                                <TextBlock Text="🧾" FontSize="16" VerticalAlignment="Center"/>
+                                <svg:Svg Path="/Assets/Icons/orders.svg" />
                                 <TextBlock Text="Orders" FontSize="14" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
                         <Border x:Name="NavPos" Classes="nav-item" Tag="POS Billing" PointerPressed="NavItem_PointerPressed">
                             <StackPanel Orientation="Horizontal" Spacing="12">
-                                <TextBlock Text="🖩" FontSize="16" VerticalAlignment="Center"/>
+                                <svg:Svg Path="/Assets/Icons/pos.svg" />
                                 <TextBlock Text="POS Billing" FontSize="14" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
                         <Border x:Name="NavInventory" Classes="nav-item" Tag="Book Inventory" PointerPressed="NavItem_PointerPressed">
                             <StackPanel Orientation="Horizontal" Spacing="12">
-                                <TextBlock Text="📖" FontSize="16" VerticalAlignment="Center"/>
+                                <svg:Svg Path="/Assets/Icons/book.svg" />
                                 <TextBlock Text="Book Inventory" FontSize="14" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
                         <Border x:Name="NavCustomers" Classes="nav-item" Tag="Customers" PointerPressed="NavItem_PointerPressed">
                             <StackPanel Orientation="Horizontal" Spacing="12">
-                                <TextBlock Text="👥" FontSize="16" VerticalAlignment="Center"/>
+                                <svg:Svg Path="/Assets/Icons/customers.svg" />
                                 <TextBlock Text="Customers" FontSize="14" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
                         <Border x:Name="NavSuppliers" Classes="nav-item" Tag="Suppliers" PointerPressed="NavItem_PointerPressed">
                             <StackPanel Orientation="Horizontal" Spacing="12">
-                                <TextBlock Text="🚚" FontSize="16" VerticalAlignment="Center"/>
+                                <svg:Svg Path="/Assets/Icons/suppliers.svg" />
                                 <TextBlock Text="Suppliers" FontSize="14" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
@@ -90,7 +99,7 @@
                 <!-- Bottom Action -->
                 <Border Grid.Row="2" Padding="24" BorderBrush="#E5E7EB" BorderThickness="0,1,0,0" PointerPressed="SignOut_PointerPressed">
                     <StackPanel Orientation="Horizontal" Spacing="12">
-                        <TextBlock Text="↪" Foreground="#EF4444" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
+                        <svg:Svg Path="/Assets/Icons/logout.svg" Width="16" Height="16" Css=".icon { fill: #EF4444; }" />
                         <TextBlock Text="Sign Out" Foreground="#EF4444" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Border>
@@ -104,13 +113,13 @@
             <Border Grid.Row="0" Background="White" BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="24,0">
                 <Grid ColumnDefinitions="Auto, *, Auto">
                     <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
-                        <TextBlock Text="≡" FontSize="20" Foreground="#4B5563" VerticalAlignment="Center"/>
+                        <svg:Svg Path="/Assets/Icons/menu.svg" Width="20" Height="20" Css=".icon { fill: #4B5563; }" />
                         <TextBlock x:Name="HeaderTitle" Text="Dashboard" FontSize="20" FontWeight="Bold" Foreground="#111827" VerticalAlignment="Center"/>
                     </StackPanel>
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
                         <TextBox Watermark="Global search..." Width="240" CornerRadius="8" Background="#F3F4F6" BorderBrush="Transparent" Padding="10,8"/>
-                        <TextBlock Text="🔔" FontSize="18" Foreground="#6B7280" VerticalAlignment="Center"/>
+                        <svg:Svg Path="/Assets/Icons/bell.svg" Width="18" Height="18" Css=".icon { fill: #6B7280; }" />
                         <Border Background="#E0E7FF" Width="36" Height="36" CornerRadius="18">
                             <TextBlock Text="AD" Foreground="#4F46E5" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>

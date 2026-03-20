@@ -1,6 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:bookShop.Views.Pages"
+             xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Svg.Controls.Skia.Avalonia"
              x:Class="bookShop.Views.Pages.OrdersPage"
              Background="Transparent">
 
@@ -10,7 +11,7 @@
         <Grid Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,16">
             <StackPanel Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
                 <Border Background="#E0E7FF" Width="36" Height="36" CornerRadius="10">
-                    <TextBlock Text="🧾" Foreground="#4F46E5" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <svg:Svg Path="/Assets/Icons/orders.svg" Width="16" Height="16" Css=".icon { fill: #4F46E5; }" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Border>
                 <TextBlock Text="Orders" FontSize="22" FontWeight="Bold" Foreground="#111827" VerticalAlignment="Center"/>
             </StackPanel>

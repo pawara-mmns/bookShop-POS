@@ -1,5 +1,6 @@
 <Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Svg.Controls.Skia.Avalonia"
         x:Class="bookShop.MainWindow"
         Title="NovaBooks POS Login"
         Width="900"
@@ -14,9 +15,7 @@
             <!-- Logo area -->
             <Border Background="#4F46E5" Width="56" Height="56" CornerRadius="14" HorizontalAlignment="Center" Margin="0,0,0,8" BoxShadow="0 6 16 0 #334F46E5">
                 <!-- Book icon -->
-                <Viewbox Width="28" Height="28">
-                    <Path Fill="White" Data="M2,3C2,2.44772 2.44772,2 3,2H9.5C10.6046,2 11.5,2.89543 11.5,4V21C11.5,21.5523 11.0523,22 10.5,22H3C2.44772,22 2,21.5523 2,21V3ZM12.5,4C12.5,2.89543 13.3954,2 14.5,2H21C21.5523,2 22,2.44772 22,3V21C22,21.5523 21.5523,22 21,22H13.5C12.9477,22 12.5,21.5523 12.5,21V4ZM13.5,20H20V4H14.5C13.6716,4 13,4.67157 13,5.5V20.25 C13.1611,20.0886 13.3444,20 13.5,20ZM10.5,20C10.6556,20 10.8389,20.0886 11,20.25V5.5C11,4.67157 10.3284,4 9.5,4H4V20H10.5Z"/>
-                </Viewbox>
+                <svg:Svg Path="/Assets/Icons/book.svg" Width="28" Height="28" Css=".icon { fill: #FFFFFF; }" />
             </Border>
 
             <TextBlock Text="NovaBooks POS" FontSize="26" FontWeight="Bold" Foreground="#111827" HorizontalAlignment="Center" />

@@ -1,5 +1,6 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Svg.Controls.Skia.Avalonia"
              x:Class="bookShop.Views.Pages.DashboardPage">
 
     <ScrollViewer Padding="32">
@@ -16,7 +17,7 @@
                 <Border Grid.Column="0" Background="White" CornerRadius="12" Padding="20" Margin="0,0,16,0" BorderBrush="#E5E7EB" BorderThickness="1">
                     <StackPanel Orientation="Horizontal" Spacing="16">
                         <Border Background="#D1FAE5" Width="50" Height="50" CornerRadius="25">
-                            <TextBlock Text="💵" FontSize="20" Foreground="#10B981" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <svg:Svg Path="/Assets/Icons/sales.svg" Width="20" Height="20" Css=".icon { fill: #10B981; }" HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="Today's Sales" FontSize="13" Foreground="#6B7280"/>
@@ -29,7 +30,7 @@
                 <Border Grid.Column="1" Background="White" CornerRadius="12" Padding="20" Margin="0,0,16,0" BorderBrush="#E5E7EB" BorderThickness="1">
                     <StackPanel Orientation="Horizontal" Spacing="16">
                         <Border Background="#E0E7FF" Width="50" Height="50" CornerRadius="25">
-                            <TextBlock Text="📖" FontSize="20" Foreground="#4F46E5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <svg:Svg Path="/Assets/Icons/book.svg" Width="20" Height="20" Css=".icon { fill: #4F46E5; }" HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="Books Sold" FontSize="13" Foreground="#6B7280"/>
@@ -42,7 +43,7 @@
                 <Border Grid.Column="2" Background="White" CornerRadius="12" Padding="20" Margin="0,0,16,0" BorderBrush="#E5E7EB" BorderThickness="1">
                     <StackPanel Orientation="Horizontal" Spacing="16">
                         <Border Background="#DBEAFE" Width="50" Height="50" CornerRadius="25">
-                            <TextBlock Text="👥" FontSize="20" Foreground="#3B82F6" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <svg:Svg Path="/Assets/Icons/customers.svg" Width="20" Height="20" Css=".icon { fill: #3B82F6; }" HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="Active Customers" FontSize="13" Foreground="#6B7280"/>
@@ -55,7 +56,7 @@
                 <Border Grid.Column="3" Background="White" CornerRadius="12" Padding="20" BorderBrush="#E5E7EB" BorderThickness="1">
                     <StackPanel Orientation="Horizontal" Spacing="16">
                         <Border Background="#FEE2E2" Width="50" Height="50" CornerRadius="25">
-                            <TextBlock Text="🔔" FontSize="20" Foreground="#EF4444" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <svg:Svg Path="/Assets/Icons/bell.svg" Width="20" Height="20" Css=".icon { fill: #EF4444; }" HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="Low Stock Items" FontSize="13" Foreground="#6B7280"/>
