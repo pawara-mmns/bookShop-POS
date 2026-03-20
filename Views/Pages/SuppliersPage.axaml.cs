@@ -25,7 +25,7 @@ public partial class SuppliersPage : UserControl
         {
             using var context = new AppDbContext();
             _suppliers = context.Suppliers
-                .OrderBy(s => s.CompanyName)
+                .OrderBy(s => s.SupplierId)
                 .ToList();
 
             var list = this.FindControl<ItemsControl>("SuppliersList");
