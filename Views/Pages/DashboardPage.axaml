@@ -8,7 +8,21 @@
 
             <Grid ColumnDefinitions="*, Auto">
                 <TextBlock Grid.Column="0" Text="Dashboard Overview" FontSize="22" FontWeight="Bold" Foreground="#111827" />
-                <TextBlock Grid.Column="1" Text="Last updated: Today, 2:30 PM" FontSize="14" Foreground="#6B7280" VerticalAlignment="Center" />
+                <Border Grid.Column="1"
+                        Background="#F3F4F6"
+                        BorderBrush="#E5E7EB"
+                        BorderThickness="1"
+                        CornerRadius="999"
+                        Padding="14,8"
+                        VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                        <Border Background="#10B981" Width="8" Height="8" CornerRadius="4" />
+                        <TextBlock x:Name="LiveDateTimeText"
+                                   FontSize="14"
+                                   Foreground="#111827"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </Border>
             </Grid>
 
             <!-- Stat Cards -->
