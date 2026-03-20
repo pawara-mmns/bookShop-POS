@@ -54,6 +54,12 @@
                                 <TextBlock Text="Dashboard" FontSize="14" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
+                        <Border x:Name="NavOrders" Classes="nav-item" Tag="Orders" PointerPressed="NavItem_PointerPressed">
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <TextBlock Text="🧾" FontSize="16" VerticalAlignment="Center"/>
+                                <TextBlock Text="Orders" FontSize="14" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
                         <Border x:Name="NavPos" Classes="nav-item" Tag="POS Billing" PointerPressed="NavItem_PointerPressed">
                             <StackPanel Orientation="Horizontal" Spacing="12">
                                 <TextBlock Text="🖩" FontSize="16" VerticalAlignment="Center"/>
