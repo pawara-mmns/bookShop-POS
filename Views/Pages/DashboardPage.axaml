@@ -1,7 +1,8 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Svg.Controls.Skia.Avalonia"
-             x:Class="bookShop.Views.Pages.DashboardPage">
+             x:Class="bookShop.Views.Pages.DashboardPage"
+             x:CompileBindings="False">
 
     <ScrollViewer Padding="32">
         <StackPanel Spacing="24">
@@ -35,7 +36,7 @@
                         </Border>
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="Today's Sales" FontSize="13" Foreground="#6B7280"/>
-                            <TextBlock Text="$1,245.00" FontSize="20" FontWeight="Bold" Foreground="#111827"/>
+                            <TextBlock x:Name="TodaySalesValue" Text="LKR 0.00" FontSize="20" FontWeight="Bold" Foreground="#111827"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -48,7 +49,7 @@
                         </Border>
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="Books Sold" FontSize="13" Foreground="#6B7280"/>
-                            <TextBlock Text="84" FontSize="20" FontWeight="Bold" Foreground="#111827"/>
+                            <TextBlock x:Name="BooksSoldValue" Text="0" FontSize="20" FontWeight="Bold" Foreground="#111827"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -61,7 +62,7 @@
                         </Border>
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="Active Customers" FontSize="13" Foreground="#6B7280"/>
-                            <TextBlock Text="12" FontSize="20" FontWeight="Bold" Foreground="#111827"/>
+                            <TextBlock x:Name="ActiveCustomersValue" Text="0" FontSize="20" FontWeight="Bold" Foreground="#111827"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -74,7 +75,7 @@
                         </Border>
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="Low Stock Items" FontSize="13" Foreground="#6B7280"/>
-                            <TextBlock Text="5" FontSize="20" FontWeight="Bold" Foreground="#111827"/>
+                            <TextBlock x:Name="LowStockItemsValue" Text="0" FontSize="20" FontWeight="Bold" Foreground="#111827"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -91,23 +92,27 @@
                             <TextBlock Grid.Column="1" Text="View All" FontSize="14" FontWeight="SemiBold" Foreground="#6B7280"/>
                         </Grid>
 
-                        <Grid ColumnDefinitions="1.5*, 1*, 1.5*, 1*, 1*" Margin="0,0,0,8">
-                            <TextBlock Grid.Column="0" Text="INVOICE" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF"/>
+                        <Grid ColumnDefinitions="1.2*, 1*, 1.6*, 1*, 1.2*" Margin="0,0,0,8">
+                            <TextBlock Grid.Column="0" Text="ORDER ID" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF"/>
                             <TextBlock Grid.Column="1" Text="TIME" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF"/>
                             <TextBlock Grid.Column="2" Text="CUSTOMER" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF"/>
                             <TextBlock Grid.Column="3" Text="TOTAL" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF"/>
-                            <TextBlock Grid.Column="4" Text="STATUS" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF"/>
+                            <TextBlock Grid.Column="4" Text="PAYMENT" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF"/>
                         </Grid>
 
-                        <Grid ColumnDefinitions="1.5*, 1*, 1.5*, 1*, 1*" Margin="0,8">
-                            <TextBlock Grid.Column="0" Text="INV-1042" FontSize="14" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="1" Text="10:24 AM" FontSize="14" Foreground="#6B7280" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="2" Text="Alice Smith" FontSize="14" Foreground="#6B7280" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="3" Text="$42.50" FontSize="14" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center"/>
-                            <Border Grid.Column="4" Background="#D1FAE5" CornerRadius="12" Padding="8,4" HorizontalAlignment="Left">
-                                <TextBlock Text="Completed" FontSize="12" Foreground="#059669" FontWeight="SemiBold"/>
-                            </Border>
-                        </Grid>
+                        <ItemsControl x:Name="RecentSalesList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="1.2*, 1*, 1.6*, 1*, 1.2*" Margin="0,8">
+                                        <TextBlock Grid.Column="0" Text="{Binding OrderId}" FontSize="14" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Time}" FontSize="14" Foreground="#6B7280" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding Customer}" FontSize="14" Foreground="#6B7280" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="3" Text="{Binding Total}" FontSize="14" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="4" Text="{Binding PaymentMethod}" FontSize="14" Foreground="#6B7280" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </StackPanel>
                 </Border>
 
@@ -121,18 +126,24 @@
                             </Border>
                         </Grid>
 
-                        <Border BorderBrush="#F3F4F6" BorderThickness="1" CornerRadius="8" Padding="16">
-                            <Grid ColumnDefinitions="*, Auto">
-                                <StackPanel Grid.Column="0">
-                                    <TextBlock Text="1984" FontSize="14" FontWeight="SemiBold" Foreground="#111827"/>
-                                    <TextBlock Text="B002" FontSize="12" Foreground="#9CA3AF" Margin="0,4,0,0"/>
-                                </StackPanel>
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right">
-                                    <TextBlock Text="8" FontSize="16" FontWeight="Bold" Foreground="#DC2626" HorizontalAlignment="Right"/>
-                                    <TextBlock Text="left" FontSize="12" Foreground="#9CA3AF" HorizontalAlignment="Right"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
+                        <ItemsControl x:Name="LowStockList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="#F3F4F6" BorderThickness="1" CornerRadius="8" Padding="16" Margin="0,0,0,12">
+                                        <Grid ColumnDefinitions="*, Auto">
+                                            <StackPanel Grid.Column="0">
+                                                <TextBlock Text="{Binding Title}" FontSize="14" FontWeight="SemiBold" Foreground="#111827"/>
+                                                <TextBlock Text="{Binding ISBN}" FontSize="12" Foreground="#9CA3AF" Margin="0,4,0,0"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                                <TextBlock Text="{Binding Stock}" FontSize="16" FontWeight="Bold" Foreground="#DC2626" HorizontalAlignment="Right"/>
+                                                <TextBlock Text="left" FontSize="12" Foreground="#9CA3AF" HorizontalAlignment="Right"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
 
                         <Button Content="Generate PO" Background="White" Foreground="#4F46E5" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="6" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Padding="0,10" FontWeight="SemiBold" />
                     </StackPanel>
