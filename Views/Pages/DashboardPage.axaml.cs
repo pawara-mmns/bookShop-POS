@@ -121,6 +121,7 @@ public partial class DashboardPage : UserControl
                     var localTime = DateTime.SpecifyKind(o.CreatedAt, DateTimeKind.Utc).ToLocalTime();
                     return new RecentSaleRow(
                         OrderId: o.OrderId.ToString(CultureInfo.InvariantCulture),
+                        Date: localTime.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
                         Time: localTime.ToString("h:mm tt", CultureInfo.InvariantCulture),
                         Customer: string.IsNullOrWhiteSpace(o.CustomerName) ? "Walk-in Customer" : o.CustomerName,
                         Total: FormatMoney(o.Total),
@@ -163,5 +164,5 @@ public partial class DashboardPage : UserControl
 
     private sealed record LowStockRow(string Title, string ISBN, int Stock);
 
-    private sealed record RecentSaleRow(string OrderId, string Time, string Customer, string Total, string PaymentMethod);
+    private sealed record RecentSaleRow(string OrderId, string Date, string Time, string Customer, string Total, string PaymentMethod);
 }
