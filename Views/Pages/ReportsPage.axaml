@@ -18,7 +18,16 @@
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
                     <ComboBox x:Name="RangeCombo" Width="140" Height="36" />
-                    <Button Content="Export PDF" Height="36" Padding="14,0" CornerRadius="8" Background="White" BorderBrush="#E5E7EB" BorderThickness="1" Click="ExportPdf_Click" />
+                    <Button Content="Export PDF"
+                            Height="36"
+                            Padding="14,0"
+                            CornerRadius="8"
+                            Background="White"
+                            BorderBrush="#E5E7EB"
+                            BorderThickness="1"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Click="ExportPdf_Click" />
                 </StackPanel>
             </Grid>
 
