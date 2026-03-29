@@ -1,0 +1,168 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Svg.Controls.Skia.Avalonia"
+             x:Class="bookShop.Views.Pages.ReportsPage"
+             x:CompileBindings="False">
+
+    <ScrollViewer Padding="32">
+        <StackPanel Spacing="24">
+
+            <!-- Header -->
+            <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                    <Border Background="#E0E7FF" Width="36" Height="36" CornerRadius="10" VerticalAlignment="Center">
+                        <svg:Svg Path="/Assets/Icons/sales.svg" Width="18" Height="18" Css=".icon { fill: #4F46E5; }" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <TextBlock Text="Analytics &amp; Reports" FontSize="22" FontWeight="Bold" Foreground="#111827" VerticalAlignment="Center" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                    <ComboBox x:Name="RangeCombo" Width="140" Height="36" />
+                    <Button Content="Export PDF" Height="36" Padding="14,0" CornerRadius="8" Background="White" BorderBrush="#E5E7EB" BorderThickness="1" Click="ExportPdf_Click" />
+                </StackPanel>
+            </Grid>
+
+            <!-- Summary Cards -->
+            <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="16">
+
+                <Border Grid.Column="0" Background="White" CornerRadius="12" Padding="18" BorderBrush="#E5E7EB" BorderThickness="1">
+                    <StackPanel Spacing="10">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Text="Gross Revenue" FontSize="13" Foreground="#6B7280" />
+                            <Border x:Name="GrossRevenueDeltaPill" Grid.Column="1" Background="#D1FAE5" CornerRadius="999" Padding="10,4" VerticalAlignment="Center">
+                                <TextBlock x:Name="GrossRevenueDeltaText" Text="—" FontSize="12" Foreground="#10B981" FontWeight="SemiBold" />
+                            </Border>
+                        </Grid>
+                        <TextBlock x:Name="GrossRevenueValue" Text="LKR 0.00" FontSize="22" FontWeight="Bold" Foreground="#111827" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Background="White" CornerRadius="12" Padding="18" BorderBrush="#E5E7EB" BorderThickness="1">
+                    <StackPanel Spacing="10">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Text="Net Profit" FontSize="13" Foreground="#6B7280" />
+                            <Border x:Name="NetProfitDeltaPill" Grid.Column="1" Background="#D1FAE5" CornerRadius="999" Padding="10,4" VerticalAlignment="Center">
+                                <TextBlock x:Name="NetProfitDeltaText" Text="—" FontSize="12" Foreground="#10B981" FontWeight="SemiBold" />
+                            </Border>
+                        </Grid>
+                        <TextBlock x:Name="NetProfitValue" Text="LKR 0.00" FontSize="22" FontWeight="Bold" Foreground="#111827" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2" Background="White" CornerRadius="12" Padding="18" BorderBrush="#E5E7EB" BorderThickness="1">
+                    <StackPanel Spacing="10">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Text="Total Orders" FontSize="13" Foreground="#6B7280" />
+                            <Border x:Name="TotalOrdersDeltaPill" Grid.Column="1" Background="#FEE2E2" CornerRadius="999" Padding="10,4" VerticalAlignment="Center">
+                                <TextBlock x:Name="TotalOrdersDeltaText" Text="—" FontSize="12" Foreground="#EF4444" FontWeight="SemiBold" />
+                            </Border>
+                        </Grid>
+                        <TextBlock x:Name="TotalOrdersValue" Text="0" FontSize="22" FontWeight="Bold" Foreground="#111827" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="3" Background="White" CornerRadius="12" Padding="18" BorderBrush="#E5E7EB" BorderThickness="1">
+                    <StackPanel Spacing="10">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Text="Avg. Order Value" FontSize="13" Foreground="#6B7280" />
+                            <Border x:Name="AvgOrderValueDeltaPill" Grid.Column="1" Background="#D1FAE5" CornerRadius="999" Padding="10,4" VerticalAlignment="Center">
+                                <TextBlock x:Name="AvgOrderValueDeltaText" Text="—" FontSize="12" Foreground="#10B981" FontWeight="SemiBold" />
+                            </Border>
+                        </Grid>
+                        <TextBlock x:Name="AvgOrderValueValue" Text="LKR 0.00" FontSize="22" FontWeight="Bold" Foreground="#111827" />
+                    </StackPanel>
+                </Border>
+
+            </Grid>
+
+            <!-- Trends & Categories -->
+            <Grid ColumnDefinitions="1.2*,1*" ColumnSpacing="24">
+
+                <Border Grid.Column="0" Background="White" CornerRadius="12" Padding="24" BorderBrush="#E5E7EB" BorderThickness="1">
+                    <StackPanel Spacing="18">
+                        <TextBlock Text="Revenue Trend" FontSize="18" FontWeight="Bold" Foreground="#111827" />
+
+                        <Border Background="#F4F7F9" CornerRadius="12" Padding="18">
+                            <ItemsControl x:Name="TrendBars">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" Spacing="12" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Width="44" VerticalAlignment="Bottom" Spacing="10">
+                                            <Border Height="160" Background="#EEF2F7" CornerRadius="10" VerticalAlignment="Bottom">
+                                                <Border Background="#4F46E5" CornerRadius="10" Height="{Binding BarHeight}" VerticalAlignment="Bottom" />
+                                            </Border>
+                                            <TextBlock Text="{Binding DayLabel}" FontSize="12" Foreground="#6B7280" HorizontalAlignment="Center" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Background="White" CornerRadius="12" Padding="24" BorderBrush="#E5E7EB" BorderThickness="1">
+                    <StackPanel Spacing="18">
+                        <TextBlock Text="Sales by Category" FontSize="18" FontWeight="Bold" Foreground="#111827" />
+
+                        <ItemsControl x:Name="CategoryList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Spacing="8" Margin="0,0,0,10">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <TextBlock Text="{Binding Category}" FontSize="13" Foreground="#111827" />
+                                            <TextBlock Grid.Column="1" Text="{Binding PercentText}" FontSize="13" Foreground="#6B7280" />
+                                        </Grid>
+                                        <ProgressBar Minimum="0" Maximum="100" Value="{Binding Percent}" Height="8" Background="#F3F4F6" Foreground="{Binding BarColor}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+            </Grid>
+
+            <!-- Top Selling -->
+            <Border Background="White" CornerRadius="12" BorderBrush="#E5E7EB" BorderThickness="1">
+                <StackPanel>
+                    <Border Padding="20" BorderBrush="#E5E7EB" BorderThickness="0,0,0,1">
+                        <TextBlock Text="Top Selling Books" FontSize="18" FontWeight="Bold" Foreground="#111827" />
+                    </Border>
+
+                    <Border Padding="20">
+                        <StackPanel Spacing="14">
+                        <Grid ColumnDefinitions="0.7*,2.2*,1.6*,1.2*,1.2*" Margin="0,0,0,6">
+                            <TextBlock Grid.Column="0" Text="RANK" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                            <TextBlock Grid.Column="1" Text="BOOK TITLE" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                            <TextBlock Grid.Column="2" Text="AUTHOR" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                            <TextBlock Grid.Column="3" Text="UNITS SOLD" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                            <TextBlock Grid.Column="4" Text="REVENUE" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
+                        </Grid>
+
+                        <ItemsControl x:Name="TopBooksList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="#F3F4F6" BorderThickness="0,0,0,1" Padding="0,12">
+                                        <Grid ColumnDefinitions="0.7*,2.2*,1.6*,1.2*,1.2*">
+                                            <TextBlock Grid.Column="0" Text="{Binding Rank}" FontSize="13" FontWeight="SemiBold" Foreground="#9CA3AF" />
+                                            <TextBlock Grid.Column="1" Text="{Binding Title}" FontSize="13" FontWeight="SemiBold" Foreground="#111827" />
+                                            <TextBlock Grid.Column="2" Text="{Binding Author}" FontSize="13" Foreground="#6B7280" />
+                                            <TextBlock Grid.Column="3" Text="{Binding UnitsSold}" FontSize="13" Foreground="#4F46E5" FontWeight="SemiBold" />
+                                            <TextBlock Grid.Column="4" Text="{Binding Revenue}" FontSize="13" Foreground="#111827" FontWeight="SemiBold" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

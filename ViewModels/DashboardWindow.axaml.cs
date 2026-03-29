@@ -36,11 +36,12 @@ public partial class DashboardWindow : Window
         host.Content = route switch
         {
             "Dashboard" => new DashboardPage(),
-                "Orders" => new OrdersPage(),
+            "Orders" => new OrdersPage(),
             "Customers" => new CustomersPage(),
             "Suppliers" => new SuppliersPage(),
             "POS Billing" => new PosBillingPage(),
             "Book Inventory" => new BookInventoryPage(),
+            "Reports" => new ReportsPage(),
             _ => host.Content
         };
 
@@ -54,18 +55,20 @@ public partial class DashboardWindow : Window
     private void SetSelectedNav(string route)
     {
         var navDashboard = this.FindControl<Border>("NavDashboard");
+        var navOrders = this.FindControl<Border>("NavOrders");
         var navPos = this.FindControl<Border>("NavPos");
         var navInventory = this.FindControl<Border>("NavInventory");
         var navCustomers = this.FindControl<Border>("NavCustomers");
         var navSuppliers = this.FindControl<Border>("NavSuppliers");
-            var navOrders = this.FindControl<Border>("NavOrders");
+        var navReports = this.FindControl<Border>("NavReports");
 
         if (navDashboard is not null) navDashboard.Classes.Set("selected", route == "Dashboard");
-            if (navOrders is not null) navOrders.Classes.Set("selected", route == "Orders");
+        if (navOrders is not null) navOrders.Classes.Set("selected", route == "Orders");
         if (navPos is not null) navPos.Classes.Set("selected", route == "POS Billing");
         if (navInventory is not null) navInventory.Classes.Set("selected", route == "Book Inventory");
         if (navCustomers is not null) navCustomers.Classes.Set("selected", route == "Customers");
         if (navSuppliers is not null) navSuppliers.Classes.Set("selected", route == "Suppliers");
+        if (navReports is not null) navReports.Classes.Set("selected", route == "Reports");
     }
 
     private void SignOut_PointerPressed(object? sender, PointerPressedEventArgs e)
