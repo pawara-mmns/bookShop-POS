@@ -20,6 +20,11 @@ public partial class ReportsPage : UserControl
 {
     private ReportSnapshot? _snapshot;
 
+    private sealed record RangeOption(string Key, string Display)
+    {
+        public override string ToString() => Display;
+    }
+
     public ReportsPage()
     {
         InitializeComponent();
@@ -27,7 +32,13 @@ public partial class ReportsPage : UserControl
         var rangeCombo = this.FindControl<ComboBox>("RangeCombo");
         if (rangeCombo is not null)
         {
-            rangeCombo.ItemsSource = new[] { "Last 7 Days" };
+            rangeCombo.ItemsSource = new RangeOption[]
+            {
+                new("Last7Days", "Last 7 Days"),
+                new("ThisMonth", "This Month"),
+                new("ThisQuarter", "This Quarter"),
+                new("YearToDate", "Year to Date")
+            };
             rangeCombo.SelectedIndex = 0;
             rangeCombo.SelectionChanged += (_, _) => Refresh();
         }
@@ -40,27 +51,49 @@ public partial class ReportsPage : UserControl
 
     private void Refresh()
     {
-        int days = 7;
-
         var rangeCombo = this.FindControl<ComboBox>("RangeCombo");
-        if (rangeCombo?.SelectedItem is string selected && selected.Contains("7", StringComparison.Ordinal))
-            days = 7;
+        var option = rangeCombo?.SelectedItem as RangeOption;
 
-        LoadReport(days);
+        var nowLocal = DateTime.Now;
+        var (label, startLocal) = GetRange(option?.Key, option?.Display, nowLocal);
+        LoadReport(label, startLocal, nowLocal);
     }
 
-    private void LoadReport(int days)
+    private static (string Label, DateTime StartLocal) GetRange(string? key, string? display, DateTime nowLocal)
+    {
+        key ??= "Last7Days";
+        display ??= "Last 7 Days";
+
+        DateTime startLocal = key switch
+        {
+            "ThisMonth" => new DateTime(nowLocal.Year, nowLocal.Month, 1),
+            "ThisQuarter" =>
+                new DateTime(nowLocal.Year, (((nowLocal.Month - 1) / 3) * 3) + 1, 1),
+            "YearToDate" => new DateTime(nowLocal.Year, 1, 1),
+            _ => nowLocal.Date.AddDays(-6)
+        };
+
+        return (display, startLocal);
+    }
+
+    private void LoadReport(string periodLabel, DateTime startLocal, DateTime nowLocal)
     {
         try
         {
             using var context = new AppDbContext();
 
-            var nowLocal = DateTime.Now;
-            var startLocal = nowLocal.Date.AddDays(-(days - 1));
+            startLocal = startLocal.Date;
             var startUtc = startLocal.ToUniversalTime();
             var endUtc = nowLocal.ToUniversalTime();
 
-            var prevStartUtc = startUtc.AddDays(-days);
+            if (endUtc < startUtc)
+                endUtc = startUtc;
+
+            var duration = endUtc - startUtc;
+            if (duration < TimeSpan.FromDays(1))
+                duration = TimeSpan.FromDays(1);
+
+            var prevStartUtc = startUtc - duration;
             var prevEndUtc = startUtc;
 
             var currentOrders = context.Orders
@@ -114,10 +147,19 @@ public partial class ReportsPage : UserControl
                 .GroupBy(o => DateTime.SpecifyKind(o.CreatedAt, DateTimeKind.Utc).ToLocalTime().Date)
                 .ToDictionary(g => g.Key, g => g.Sum(x => x.Total));
 
-            var trend = new List<TrendBarRow>(capacity: days);
-            for (int i = 0; i < days; i++)
+            var trendEndLocal = nowLocal.Date;
+            var trendStartLocal = trendEndLocal.AddDays(-6);
+            if (trendStartLocal < startLocal.Date)
+                trendStartLocal = startLocal.Date;
+
+            var trendDays = (trendEndLocal - trendStartLocal).Days + 1;
+            if (trendDays < 1)
+                trendDays = 1;
+
+            var trend = new List<TrendBarRow>(capacity: trendDays);
+            for (int i = 0; i < trendDays; i++)
             {
-                var day = startLocal.AddDays(i);
+                var day = trendStartLocal.AddDays(i);
                 totalsByDay.TryGetValue(day, out var amount);
                 trend.Add(new TrendBarRow(day.ToString("ddd", CultureInfo.InvariantCulture), amount));
             }
@@ -143,7 +185,7 @@ public partial class ReportsPage : UserControl
                 topList.ItemsSource = topRows;
 
             _snapshot = new ReportSnapshot(
-                PeriodLabel: $"Last {days} Days",
+                PeriodLabel: periodLabel,
                 GrossRevenue: currentGross,
                 NetProfit: currentNet,
                 TotalOrders: currentCount,
