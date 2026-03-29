@@ -91,8 +91,8 @@
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel VerticalAlignment="Bottom" Spacing="10" HorizontalAlignment="Center">
-                                            <Border Height="160" Background="#EEF2F7" CornerRadius="10" VerticalAlignment="Bottom">
+                                        <StackPanel VerticalAlignment="Bottom" Spacing="10" HorizontalAlignment="Center" Margin="6,0">
+                                            <Border Height="160" Width="60" Background="#EEF2F7" CornerRadius="10" VerticalAlignment="Bottom" HorizontalAlignment="Center">
                                                 <Border Background="#4F46E5" CornerRadius="10" Height="{Binding BarHeight}" VerticalAlignment="Bottom" />
                                             </Border>
                                             <TextBlock Text="{Binding DayLabel}" FontSize="12" Foreground="#6B7280" HorizontalAlignment="Center" />
