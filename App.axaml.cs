@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using bookShop.Data;
+using bookShop.Service;
 
 namespace bookShop;
 
@@ -15,6 +16,7 @@ public partial class App : Application
     public override void OnFrameworkInitializationCompleted()
     {
         DatabaseInitializer.Initialize();
+        PdfFontBootstrap.Initialize();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

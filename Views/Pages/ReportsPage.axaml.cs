@@ -390,9 +390,10 @@ public partial class ReportsPage : UserControl
         using var gfx = XGraphics.FromPdfPage(page);
 
         const string fontFamily = "DejaVu Sans";
-        var titleFont = new XFont(fontFamily, 18, XFontStyle.Bold);
-        var headerFont = new XFont(fontFamily, 12, XFontStyle.Bold);
-        var bodyFont = new XFont(fontFamily, 11, XFontStyle.Regular);
+        var fontOptions = new XPdfFontOptions(PdfFontEncoding.Unicode);
+        var titleFont = new XFont(fontFamily, 18, XFontStyle.Bold, fontOptions);
+        var headerFont = new XFont(fontFamily, 12, XFontStyle.Bold, fontOptions);
+        var bodyFont = new XFont(fontFamily, 11, XFontStyle.Regular, fontOptions);
 
         double x = 40;
         double y = 40;
