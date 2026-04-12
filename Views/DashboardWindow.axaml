@@ -135,6 +135,8 @@
                 </Grid>
             </Border>
 
+                <ContentControl x:Name="PageHost" Grid.Row="1" />
+
             <Border x:Name="NotificationsPanel"
                     Grid.RowSpan="2"
                     HorizontalAlignment="Right"
@@ -191,8 +193,6 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-
-            <ContentControl x:Name="PageHost" Grid.Row="1" />
         </Grid>
     </Grid>
 </Window>
