@@ -19,6 +19,7 @@ public class AppDbContext : DbContext
     public DbSet<Suppliers> Suppliers => Set<Suppliers>();
     public DbSet<Orders> Orders => Set<Orders>();
     public DbSet<OrderDetails> OrderDetails => Set<OrderDetails>();
+    public DbSet<Notification> Notifications => Set<Notification>();
 
     private const string ConnectionString = "server=localhost;port=3306;database=bookshopdb;user=root;password=1234";
 
