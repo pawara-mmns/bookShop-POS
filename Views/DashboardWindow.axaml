@@ -125,13 +125,72 @@
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
                         <TextBox Watermark="Global search..." Width="240" CornerRadius="8" Background="#F3F4F6" BorderBrush="Transparent" Padding="10,8"/>
-                        <svg:Svg Path="/Assets/Icons/bell.svg" Width="18" Height="18" Css=".icon { fill: #6B7280; }" />
+                        <Button x:Name="NotificationsButton" Background="Transparent" BorderBrush="Transparent" Padding="0" Click="NotificationsButton_Click">
+                            <svg:Svg Path="/Assets/Icons/bell.svg" Width="18" Height="18" Css=".icon { fill: #6B7280; }" />
+                        </Button>
                         <Border Background="#E0E7FF" Width="36" Height="36" CornerRadius="18">
                             <TextBlock Text="AD" Foreground="#4F46E5" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </StackPanel>
                 </Grid>
             </Border>
+
+            <Border x:Name="NotificationsPanel"
+                    Grid.RowSpan="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="0,70,24,0"
+                    Background="White"
+                    BorderBrush="#E5E7EB"
+                    BorderThickness="1"
+                    CornerRadius="12"
+                    Padding="16"
+                    Width="380"
+                    IsVisible="False"
+                    x:CompileBindings="False">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Notifications" FontSize="16" FontWeight="Bold" Foreground="#111827" />
+
+                    <TextBlock x:Name="NotificationsEmptyText" Text="No notifications" FontSize="13" Foreground="#6B7280" />
+
+                    <ScrollViewer MaxHeight="320">
+                        <ItemsControl x:Name="NotificationsList" x:CompileBindings="False">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:CompileBindings="False">
+                                    <Border BorderBrush="#F3F4F6" BorderThickness="1" CornerRadius="10" Padding="12" Margin="0,0,0,10">
+                                        <StackPanel Spacing="6">
+                                            <Grid ColumnDefinitions="*, Auto">
+                                                <TextBlock Grid.Column="0" Text="{Binding Title}" FontSize="13" FontWeight="SemiBold" Foreground="#111827"/>
+                                                <TextBlock Grid.Column="1" Text="{Binding Time}" FontSize="12" Foreground="#9CA3AF"/>
+                                            </Grid>
+                                            <TextBlock Text="{Binding Message}" FontSize="12" Foreground="#6B7280" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </StackPanel>
+            </Border>
+
+            <ItemsControl x:Name="ToastHost"
+                          Grid.RowSpan="2"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Top"
+                          Margin="0,80,24,0"
+                          IsHitTestVisible="False"
+                          x:CompileBindings="False">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:CompileBindings="False">
+                        <Border Background="White" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="12" Padding="14,10" Margin="0,0,0,10" Width="360">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="{Binding Title}" FontSize="13" FontWeight="SemiBold" Foreground="#111827" />
+                                <TextBlock Text="{Binding Message}" FontSize="12" Foreground="#6B7280" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
             <ContentControl x:Name="PageHost" Grid.Row="1" />
         </Grid>

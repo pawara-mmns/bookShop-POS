@@ -9,6 +9,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using bookShop.Data;
 using bookShop.Models;
+using bookShop.Service;
 using bookShop.Views.Dialogs;
 using Microsoft.EntityFrameworkCore;
 
@@ -390,6 +391,9 @@ public partial class PosBillingPage : UserControl
             using var context = new AppDbContext();
             using var tx = context.Database.BeginTransaction();
 
+            var createdNotifications = new List<Notification>();
+            var lowStockCrossed = new List<(string Title, string ISBN, int Stock)>();
+
             var order = new Orders
             {
                 CreatedAt = DateTime.UtcNow,
@@ -406,6 +410,18 @@ public partial class PosBillingPage : UserControl
 
             context.Orders.Add(order);
             context.SaveChanges();
+
+            var saleNotification = new Notification
+            {
+                CreatedAt = DateTime.UtcNow,
+                Type = "SaleCompleted",
+                Title = "Sale completed",
+                Message = $"Order #{order.OrderId} • {FormatMoney(total)} • {_paymentMethod}",
+                OrderId = order.OrderId
+            };
+
+            context.Notifications.Add(saleNotification);
+            createdNotifications.Add(saleNotification);
 
             foreach (var line in _orderLines)
             {
@@ -428,12 +444,34 @@ public partial class PosBillingPage : UserControl
                     if (book.Stock < line.Quantity)
                         throw new InvalidOperationException($"Insufficient stock for '{book.Title}'.");
 
+                    var oldStock = book.Stock;
                     book.Stock -= line.Quantity;
+
+                    if (oldStock >= 8 && book.Stock < 8)
+                        lowStockCrossed.Add((book.Title, book.ISBN, book.Stock));
                 }
+            }
+
+            foreach (var item in lowStockCrossed)
+            {
+                var n = new Notification
+                {
+                    CreatedAt = DateTime.UtcNow,
+                    Type = "LowStock",
+                    Title = "Low stock alert",
+                    Message = $"{item.Title} ({item.ISBN}) is low: {item.Stock} left",
+                    ISBN = item.ISBN
+                };
+
+                context.Notifications.Add(n);
+                createdNotifications.Add(n);
             }
 
             context.SaveChanges();
             tx.Commit();
+
+            foreach (var n in createdNotifications)
+                NotificationHub.Raise(n);
 
             // Reset UI
             foreach (var line in _orderLines.ToList())

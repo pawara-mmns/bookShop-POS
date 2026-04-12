@@ -1,18 +1,79 @@
+using System;
+using System.Collections.ObjectModel;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
+using Avalonia.Threading;
+using bookShop.Models;
+using bookShop.Service;
 using bookShop.Views.Pages;
 
 namespace bookShop.Views;
 
 public partial class DashboardWindow : Window
 {
+    private readonly ObservableCollection<ToastItem> _toasts = new();
+
     public DashboardWindow()
     {
         InitializeComponent();
 
         global::bookShop.AppIcon.Apply(this);
 
+        var toastHost = this.FindControl<ItemsControl>("ToastHost");
+        if (toastHost is not null)
+            toastHost.ItemsSource = _toasts;
+
+        NotificationHub.NotificationCreated += NotificationHub_NotificationCreated;
+        Closed += (_, _) => NotificationHub.NotificationCreated -= NotificationHub_NotificationCreated;
+
         NavigateTo("Dashboard");
+    }
+
+    private void NotificationsButton_Click(object? sender, RoutedEventArgs e)
+    {
+        var panel = this.FindControl<Border>("NotificationsPanel");
+        if (panel is null)
+            return;
+
+        panel.IsVisible = !panel.IsVisible;
+        if (panel.IsVisible)
+            RefreshNotificationsList();
+    }
+
+    private void RefreshNotificationsList()
+    {
+        var list = this.FindControl<ItemsControl>("NotificationsList");
+        var empty = this.FindControl<TextBlock>("NotificationsEmptyText");
+        if (list is null || empty is null)
+            return;
+
+        var items = NotificationService.GetLatest(20);
+        list.ItemsSource = items;
+        empty.IsVisible = items.Count == 0;
+    }
+
+    private void NotificationHub_NotificationCreated(object? sender, Notification notification)
+    {
+        Dispatcher.UIThread.Post(() =>
+        {
+            ShowToast(notification.Title, notification.Message);
+            RefreshNotificationsList();
+        });
+    }
+
+    private void ShowToast(string title, string message)
+    {
+        var toast = new ToastItem(title, message);
+        _toasts.Add(toast);
+
+        var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(4) };
+        timer.Tick += (_, _) =>
+        {
+            timer.Stop();
+            _toasts.Remove(toast);
+        };
+        timer.Start();
     }
 
     private void NavItem_PointerPressed(object? sender, PointerPressedEventArgs e)
@@ -77,4 +138,6 @@ public partial class DashboardWindow : Window
         login.Show();
         Close();
     }
+
+    private sealed record ToastItem(string Title, string Message);
 }
