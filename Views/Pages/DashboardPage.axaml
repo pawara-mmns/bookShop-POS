@@ -147,7 +147,17 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
 
-                        <Button Content="Generate PO" Background="White" Foreground="#4F46E5" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="6" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Padding="0,10" FontWeight="SemiBold" />
+                        <Button Content="Generate PO"
+                                Background="White"
+                                Foreground="#4F46E5"
+                                BorderBrush="#E5E7EB"
+                                BorderThickness="1"
+                                CornerRadius="6"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Padding="0,10"
+                                FontWeight="SemiBold"
+                                Click="GeneratePo_Click" />
                     </StackPanel>
                 </Border>
 

@@ -1,11 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using bookShop.Data;
+using bookShop.Models;
+using bookShop.Service;
 using Microsoft.EntityFrameworkCore;
+using PdfSharpCore.Drawing;
+using PdfSharpCore.Pdf;
 
 namespace bookShop.Views.Pages;
 
@@ -165,4 +172,177 @@ public partial class DashboardPage : UserControl
     private sealed record LowStockRow(string Title, string ISBN, int Stock);
 
     private sealed record RecentSaleRow(string OrderId, string Date, string Time, string Customer, string Total, string PaymentMethod);
+
+    private async void GeneratePo_Click(object? sender, RoutedEventArgs e)
+    {
+        List<LowStockRow> items;
+
+        try
+        {
+            using var context = new AppDbContext();
+            items = context.Books
+                .AsNoTracking()
+                .Where(b => b.Stock < 8)
+                .OrderBy(b => b.Stock)
+                .ThenBy(b => b.Title)
+                .Select(b => new LowStockRow(b.Title, b.ISBN, b.Stock))
+                .ToList();
+        }
+        catch
+        {
+            items = new List<LowStockRow>();
+        }
+
+        if (items.Count == 0)
+        {
+            CreateAndRaiseNotification(new Notification
+            {
+                CreatedAt = DateTime.UtcNow,
+                Type = "PurchaseOrder",
+                Title = "Generate PO",
+                Message = "No low-stock items found."
+            });
+            return;
+        }
+
+        var topLevel = TopLevel.GetTopLevel(this);
+        if (topLevel?.StorageProvider is not { } storage)
+            return;
+
+        var file = await storage.SaveFilePickerAsync(new FilePickerSaveOptions
+        {
+            Title = "Generate Purchase Order",
+            SuggestedFileName = $"purchase-order-{DateTime.Now:yyyyMMdd-HHmm}.pdf",
+            DefaultExtension = "pdf",
+            FileTypeChoices = new[]
+            {
+                new FilePickerFileType("PDF") { Patterns = new[] { "*.pdf" } }
+            }
+        });
+
+        if (file is null)
+            return;
+
+        try
+        {
+            await using var stream = await file.OpenWriteAsync();
+            WritePurchaseOrderPdf(stream, items);
+
+            CreateAndRaiseNotification(new Notification
+            {
+                CreatedAt = DateTime.UtcNow,
+                Type = "PurchaseOrder",
+                Title = "PO generated",
+                Message = $"Purchase order exported ({items.Count} items)."
+            });
+        }
+        catch
+        {
+            CreateAndRaiseNotification(new Notification
+            {
+                CreatedAt = DateTime.UtcNow,
+                Type = "PurchaseOrder",
+                Title = "PO export failed",
+                Message = "Could not write the PDF file."
+            });
+        }
+    }
+
+    private static void WritePurchaseOrderPdf(Stream stream, List<LowStockRow> items)
+    {
+        const int targetStock = 10;
+
+        static PdfPage AddA4Page(PdfDocument doc)
+        {
+            var p = doc.AddPage();
+            p.Size = PdfSharpCore.PageSize.A4;
+            return p;
+        }
+
+        var document = new PdfDocument();
+        var page = AddA4Page(document);
+        XGraphics gfx = XGraphics.FromPdfPage(page);
+
+        try
+        {
+            var fontOptions = new XPdfFontOptions(PdfFontEncoding.Unicode);
+            var titleFont = new XFont("DejaVu Sans", 18, XFontStyle.Bold, fontOptions);
+            var subFont = new XFont("DejaVu Sans", 10, XFontStyle.Regular, fontOptions);
+            var headerFont = new XFont("DejaVu Sans", 10, XFontStyle.Bold, fontOptions);
+            var rowFont = new XFont("DejaVu Sans", 10, XFontStyle.Regular, fontOptions);
+
+            double margin = 40;
+            double x = margin;
+            double y = 50;
+
+            void DrawTableHeader()
+            {
+                gfx.DrawString("Title", headerFont, XBrushes.Black, new XPoint(x, y));
+                gfx.DrawString("ISBN", headerFont, XBrushes.Black, new XPoint(x + 270, y));
+                gfx.DrawString("Stock", headerFont, XBrushes.Black, new XPoint(x + 400, y));
+                gfx.DrawString("Qty", headerFont, XBrushes.Black, new XPoint(x + 460, y));
+                y += 12;
+                gfx.DrawLine(XPens.LightGray, x, y, page.Width - margin, y);
+                y += 14;
+            }
+
+            gfx.DrawString("Purchase Order (Low Stock)", titleFont, XBrushes.Black, new XPoint(x, y));
+            y += 22;
+            gfx.DrawString($"Generated: {DateTime.Now:ddd, MMM dd, yyyy • h:mm tt}", subFont, XBrushes.Gray, new XPoint(x, y));
+            y += 26;
+
+            DrawTableHeader();
+
+            foreach (var item in items)
+            {
+                if (y > page.Height - 60)
+                {
+                    gfx.Dispose();
+                    page = AddA4Page(document);
+                    gfx = XGraphics.FromPdfPage(page);
+                    y = 50;
+                    DrawTableHeader();
+                }
+
+                var qty = Math.Max(0, targetStock - item.Stock);
+
+                gfx.DrawString(TrimTo(item.Title, 40), rowFont, XBrushes.Black, new XPoint(x, y));
+                gfx.DrawString(item.ISBN, rowFont, XBrushes.Black, new XPoint(x + 270, y));
+                gfx.DrawString(item.Stock.ToString(CultureInfo.InvariantCulture), rowFont, XBrushes.Black, new XPoint(x + 400, y));
+                gfx.DrawString(qty.ToString(CultureInfo.InvariantCulture), rowFont, XBrushes.Black, new XPoint(x + 460, y));
+
+                y += 18;
+            }
+        }
+        finally
+        {
+            gfx.Dispose();
+        }
+
+        document.Save(stream, closeStream: false);
+    }
+
+    private static string TrimTo(string value, int max)
+    {
+        if (string.IsNullOrEmpty(value) || value.Length <= max)
+            return value;
+
+        return value.Substring(0, max - 1) + "…";
+    }
+
+    private static void CreateAndRaiseNotification(Notification notification)
+    {
+        try
+        {
+            using var context = new AppDbContext();
+            context.Notifications.Add(notification);
+            context.SaveChanges();
+        }
+        catch
+        {
+            // ignore persistence failure
+        }
+
+        NotificationHub.Raise(notification);
+    }
 }
