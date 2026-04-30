@@ -1,0 +1,53 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="bookShop.Views.Dialogs.AddDiscountCardWindow"
+        Title="Add Discount Card"
+        Width="520"
+        Height="560"
+        WindowStartupLocation="CenterOwner"
+        Background="#F9FAFB"
+        CanResize="False">
+
+    <Border Background="White" CornerRadius="12" BorderBrush="#E5E7EB" BorderThickness="1" Margin="16" Padding="20">
+        <Grid RowDefinitions="Auto,*,Auto" RowSpacing="14">
+
+            <TextBlock Grid.Row="0" Text="Add Discount Card" FontSize="20" FontWeight="Bold" Foreground="#111827" />
+
+            <StackPanel Grid.Row="1" Spacing="12">
+
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Discount Code" FontWeight="SemiBold" FontSize="13" Foreground="#374151" />
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                        <TextBox x:Name="CodeBox" CornerRadius="8" MinHeight="40" Padding="12,8" Background="White" BorderBrush="#D1D5DB" Watermark="XXX-XXX-XXX" />
+                        <Button Grid.Column="1" Content="Generate" Background="White" Foreground="#111827" BorderBrush="#D1D5DB" BorderThickness="1" CornerRadius="8" Padding="14,10" FontWeight="SemiBold" Click="Generate_Click" />
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Type" FontWeight="SemiBold" FontSize="13" Foreground="#374151" />
+                    <ComboBox x:Name="TypeCombo" CornerRadius="8" MinHeight="40" Padding="12,8" Background="White" BorderBrush="#D1D5DB" />
+                </StackPanel>
+
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Value" FontWeight="SemiBold" FontSize="13" Foreground="#374151" />
+                    <TextBox x:Name="ValueBox" CornerRadius="8" MinHeight="40" Padding="12,8" Background="White" BorderBrush="#D1D5DB" Watermark="e.g. 10 (percent) or 500 (LKR)" />
+                </StackPanel>
+
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Expires At (optional)" FontWeight="SemiBold" FontSize="13" Foreground="#374151" />
+                    <DatePicker x:Name="ExpiresPicker" />
+                </StackPanel>
+
+                <CheckBox x:Name="ActiveCheck" Content="Active" IsChecked="True" Foreground="#4B5563" FontSize="13" />
+
+                <TextBlock x:Name="ErrorText" Text="" Foreground="#EF4444" FontSize="13" TextWrapping="Wrap" />
+            </StackPanel>
+
+            <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Button Grid.Column="0" Content="Cancel" Background="White" Foreground="#111827" BorderBrush="#D1D5DB" BorderThickness="1" CornerRadius="8" Padding="14,10" FontWeight="SemiBold" Click="Cancel_Click" />
+                <Button Grid.Column="1" Content="Add" Background="#4F46E5" Foreground="White" CornerRadius="8" Padding="14,10" FontWeight="SemiBold" Click="Add_Click" />
+            </Grid>
+
+        </Grid>
+    </Border>
+</Window>
