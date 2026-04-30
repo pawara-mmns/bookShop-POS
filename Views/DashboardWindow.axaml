@@ -87,6 +87,13 @@
                                 <TextBlock Text="Customers" FontSize="14" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
+
+                        <Border x:Name="NavCashiers" Classes="nav-item" Tag="Cashiers" PointerPressed="NavItem_PointerPressed">
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <svg:Svg Path="/Assets/Icons/customers.svg" />
+                                <TextBlock Text="Cashiers" FontSize="14" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
                         <Border x:Name="NavSuppliers" Classes="nav-item" Tag="Suppliers" PointerPressed="NavItem_PointerPressed">
                             <StackPanel Orientation="Horizontal" Spacing="12">
                                 <svg:Svg Path="/Assets/Icons/suppliers.svg" />

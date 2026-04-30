@@ -27,7 +27,39 @@ public partial class DashboardWindow : Window
         NotificationHub.NotificationCreated += NotificationHub_NotificationCreated;
         Closed += (_, _) => NotificationHub.NotificationCreated -= NotificationHub_NotificationCreated;
 
-        NavigateTo("Dashboard");
+        ApplyNavigationPermissions();
+
+        var defaultRoute = AuthorizationService.GetDefaultRoute(SessionContext.CurrentUser);
+        NavigateTo(defaultRoute);
+    }
+
+    private void ApplyNavigationPermissions()
+    {
+        var user = SessionContext.CurrentUser;
+
+        // If no session (e.g., window opened directly), keep existing nav visible.
+        if (user is null)
+            return;
+
+        void SetVisible(string name, string route)
+        {
+            var nav = this.FindControl<Border>(name);
+            if (nav is not null)
+                nav.IsVisible = AuthorizationService.CanAccessRoute(user, route) || AuthorizationService.IsAdmin(user);
+        }
+
+        SetVisible("NavDashboard", "Dashboard");
+        SetVisible("NavOrders", "Orders");
+        SetVisible("NavPos", "POS Billing");
+        SetVisible("NavInventory", "Book Inventory");
+        SetVisible("NavCustomers", "Customers");
+        SetVisible("NavSuppliers", "Suppliers");
+        SetVisible("NavReports", "Reports");
+        SetVisible("NavDiscountCards", "Discount Cards");
+
+        var navCashiers = this.FindControl<Border>("NavCashiers");
+        if (navCashiers is not null)
+            navCashiers.IsVisible = AuthorizationService.IsAdmin(user);
     }
 
     private void NotificationsButton_Click(object? sender, RoutedEventArgs e)
@@ -90,6 +122,10 @@ public partial class DashboardWindow : Window
 
     private void NavigateTo(string route)
     {
+        var user = SessionContext.CurrentUser;
+        if (user is not null && !AuthorizationService.CanAccessRoute(user, route) && !AuthorizationService.IsAdmin(user))
+            return;
+
         var host = this.FindControl<ContentControl>("PageHost");
         if (host is null)
             return;
@@ -104,6 +140,7 @@ public partial class DashboardWindow : Window
             "Book Inventory" => new BookInventoryPage(),
             "Reports" => new ReportsPage(),
             "Discount Cards" => new DiscountCardsPage(),
+            "Cashiers" => new CashiersPage(),
             _ => host.Content
         };
 
@@ -121,6 +158,7 @@ public partial class DashboardWindow : Window
         var navPos = this.FindControl<Border>("NavPos");
         var navInventory = this.FindControl<Border>("NavInventory");
         var navCustomers = this.FindControl<Border>("NavCustomers");
+        var navCashiers = this.FindControl<Border>("NavCashiers");
         var navSuppliers = this.FindControl<Border>("NavSuppliers");
         var navReports = this.FindControl<Border>("NavReports");
         var navDiscountCards = this.FindControl<Border>("NavDiscountCards");
@@ -130,6 +168,7 @@ public partial class DashboardWindow : Window
         if (navPos is not null) navPos.Classes.Set("selected", route == "POS Billing");
         if (navInventory is not null) navInventory.Classes.Set("selected", route == "Book Inventory");
         if (navCustomers is not null) navCustomers.Classes.Set("selected", route == "Customers");
+        if (navCashiers is not null) navCashiers.Classes.Set("selected", route == "Cashiers");
         if (navSuppliers is not null) navSuppliers.Classes.Set("selected", route == "Suppliers");
         if (navReports is not null) navReports.Classes.Set("selected", route == "Reports");
         if (navDiscountCards is not null) navDiscountCards.Classes.Set("selected", route == "Discount Cards");
@@ -137,6 +176,7 @@ public partial class DashboardWindow : Window
 
     private void SignOut_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
+        SessionContext.Clear();
         var login = new global::bookShop.MainWindow();
         login.Show();
         Close();
