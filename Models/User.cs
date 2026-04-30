@@ -5,6 +5,8 @@ public class User
     public string userName { get; set; } = null!;
     public string password { get; set; } = null!;
 
+    public bool isActive { get; set; } = true;
+
     // Roles: "Admin", "Cashier"
     public string role { get; set; } = "Cashier";
 
