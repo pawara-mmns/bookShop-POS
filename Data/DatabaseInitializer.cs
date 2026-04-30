@@ -18,6 +18,7 @@ public static class DatabaseInitializer
             {
                 userName = "admin",
                 password = "1234",
+                isActive = true,
                 role = "Admin",
                 canUsePosBilling = true,
                 canViewDashboard = true,
@@ -37,6 +38,7 @@ public static class DatabaseInitializer
         if (admin is not null && admin.role != "Admin")
         {
             admin.role = "Admin";
+            admin.isActive = true;
             admin.canUsePosBilling = true;
             admin.canViewDashboard = true;
             admin.canViewOrders = true;

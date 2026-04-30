@@ -37,6 +37,10 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<User>()
+            .Property(u => u.isActive)
+            .HasDefaultValue(true);
+
         modelBuilder.Entity<DiscountCards>()
             .HasIndex(d => d.Code)
             .IsUnique();
