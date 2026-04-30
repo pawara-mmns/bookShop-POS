@@ -25,11 +25,12 @@
 
                 <!-- Table Header -->
                 <Border Grid.Row="0" Background="Transparent" BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="16,12">
-                    <Grid ColumnDefinitions="80,2*,3*,Auto" ColumnSpacing="12">
+                    <Grid ColumnDefinitions="80,2*,3*,120,Auto" ColumnSpacing="12">
                         <TextBlock Text="ID" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
                         <TextBlock Grid.Column="1" Text="USERNAME" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
                         <TextBlock Grid.Column="2" Text="ACCESS" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" />
-                        <TextBlock Grid.Column="3" Text="ACTIONS" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" HorizontalAlignment="Right" />
+                        <TextBlock Grid.Column="3" Text="ACTIVE" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" HorizontalAlignment="Center" />
+                        <TextBlock Grid.Column="4" Text="ACTIONS" FontSize="12" FontWeight="Bold" Foreground="#9CA3AF" HorizontalAlignment="Right" />
                     </Grid>
                 </Border>
 
@@ -39,12 +40,19 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="local:CashierRow">
                                 <Border Background="Transparent" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1" Padding="0,10">
-                                    <Grid ColumnDefinitions="80,2*,3*,Auto" ColumnSpacing="12">
+                                    <Grid ColumnDefinitions="80,2*,3*,120,Auto" ColumnSpacing="12">
                                         <TextBlock Text="{Binding Id}" FontSize="13" FontWeight="SemiBold" Foreground="#111827" />
                                         <TextBlock Grid.Column="1" Text="{Binding UserName}" FontSize="13" FontWeight="SemiBold" Foreground="#111827" />
                                         <TextBlock Grid.Column="2" Text="{Binding AccessSummary}" FontSize="13" Foreground="#6B7280" TextWrapping="NoWrap" />
 
-                                        <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
+                                        <CheckBox Grid.Column="3"
+                                                  IsChecked="{Binding IsActive}"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  Checked="ActiveToggle_Changed"
+                                                  Unchecked="ActiveToggle_Changed" />
+
+                                        <StackPanel Grid.Column="4" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
                                             <Button Background="Transparent" BorderThickness="0" Padding="6" Click="EditCashier_Click" ToolTip.Tip="Edit">
                                                 <svg:Svg Path="/Assets/Icons/edit.svg" Width="16" Height="16" Css=".icon { fill: #9CA3AF; }" />
                                             </Button>

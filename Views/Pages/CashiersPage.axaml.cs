@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -139,14 +141,64 @@ public partial class CashiersPage : UserControl
             // minimal behavior
         }
     }
+
+    private void ActiveToggle_Changed(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not CheckBox cb)
+            return;
+
+        if (cb.DataContext is not CashierRow row)
+            return;
+
+        if (!AuthorizationService.IsAdmin(SessionContext.CurrentUser))
+        {
+            cb.IsChecked = row.IsActive;
+            return;
+        }
+
+        bool desired = cb.IsChecked ?? false;
+
+        try
+        {
+            using var context = new AppDbContext();
+            var user = context.Users.FirstOrDefault(u => u.Id == row.Id && u.role == AuthorizationService.RoleCashier);
+            if (user is null)
+            {
+                cb.IsChecked = row.IsActive;
+                return;
+            }
+
+            user.isActive = desired;
+            context.SaveChanges();
+
+            row.IsActive = desired;
+        }
+        catch (Exception)
+        {
+            cb.IsChecked = row.IsActive;
+        }
+    }
 }
 
-public class CashierRow
+public class CashierRow : INotifyPropertyChanged
 {
+    public event PropertyChangedEventHandler? PropertyChanged;
+
     public int Id { get; set; }
     public string UserName { get; set; } = "";
 
-    public bool IsActive { get; set; } = true;
+    private bool _isActive = true;
+    public bool IsActive
+    {
+        get => _isActive;
+        set
+        {
+            if (value == _isActive) return;
+            _isActive = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(AccessSummary));
+        }
+    }
 
     public bool CanViewDashboard { get; set; }
     public bool CanViewOrders { get; set; }
@@ -173,4 +225,7 @@ public class CashierRow
             return string.Join(" • ", parts);
         }
     }
+
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 }
