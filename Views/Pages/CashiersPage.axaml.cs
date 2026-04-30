@@ -41,6 +41,7 @@ public partial class CashiersPage : UserControl
                 {
                     Id = u.Id,
                     UserName = u.userName,
+                    IsActive = u.isActive,
                     CanViewDashboard = u.canViewDashboard,
                     CanViewOrders = u.canViewOrders,
                     CanViewInventory = u.canViewInventory,
@@ -145,6 +146,8 @@ public class CashierRow
     public int Id { get; set; }
     public string UserName { get; set; } = "";
 
+    public bool IsActive { get; set; } = true;
+
     public bool CanViewDashboard { get; set; }
     public bool CanViewOrders { get; set; }
     public bool CanViewInventory { get; set; }
@@ -157,7 +160,9 @@ public class CashierRow
     {
         get
         {
-            var parts = new List<string> { "POS" };
+            var parts = new List<string>();
+            if (!IsActive) parts.Add("Disabled");
+            parts.Add("POS");
             if (CanViewDashboard) parts.Add("Dashboard");
             if (CanViewOrders) parts.Add("Orders");
             if (CanViewInventory) parts.Add("Inventory");
