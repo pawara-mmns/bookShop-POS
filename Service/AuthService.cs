@@ -6,15 +6,31 @@ namespace bookShop.Service;
 
 public class AuthService
 {
-    public User? Login(string username, string password)
+    public bool TryLogin(string username, string password, out User? user, out string error)
     {
         using var context = new AppDbContext();
 
-        var user = context.Users.FirstOrDefault(u => u.userName == username);
-        if (user is null || user.password != password)
-            return null;
+        user = context.Users.FirstOrDefault(u => u.userName == username);
+        if (user is null)
+        {
+            error = "Invalid username or password.";
+            return false;
+        }
+
+        if (!user.isActive)
+        {
+            error = "This account is disabled.";
+            return false;
+        }
+
+        if (user.password != password)
+        {
+            error = "Invalid username or password.";
+            return false;
+        }
 
         SessionContext.Set(user);
-        return user;
+        error = "";
+        return true;
     }
 }
