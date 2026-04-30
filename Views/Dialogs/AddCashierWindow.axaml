@@ -29,6 +29,8 @@
 
                 <TextBlock Text="Access (POS Billing is always available)" FontWeight="SemiBold" FontSize="13" Foreground="#111827" />
 
+                <CheckBox x:Name="ActiveCheck" Content="Active" IsChecked="True" Foreground="#4B5563" FontSize="13" />
+
                 <CheckBox x:Name="DashboardCheck" Content="Dashboard" Foreground="#4B5563" FontSize="13" />
                 <CheckBox x:Name="OrdersCheck" Content="Orders" Foreground="#4B5563" FontSize="13" />
                 <CheckBox x:Name="InventoryCheck" Content="Book Inventory" Foreground="#4B5563" FontSize="13" />

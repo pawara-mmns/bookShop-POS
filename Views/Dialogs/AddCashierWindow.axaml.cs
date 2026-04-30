@@ -60,6 +60,7 @@ public partial class AddCashierWindow : Window
                 userName = username,
                 password = password,
                 role = AuthorizationService.RoleCashier,
+                isActive = this.FindControl<CheckBox>("ActiveCheck")?.IsChecked ?? true,
                 canUsePosBilling = true,
                 canViewDashboard = this.FindControl<CheckBox>("DashboardCheck")?.IsChecked ?? false,
                 canViewOrders = this.FindControl<CheckBox>("OrdersCheck")?.IsChecked ?? false,
