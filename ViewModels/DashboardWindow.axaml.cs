@@ -103,6 +103,7 @@ public partial class DashboardWindow : Window
             "POS Billing" => new PosBillingPage(),
             "Book Inventory" => new BookInventoryPage(),
             "Reports" => new ReportsPage(),
+            "Discount Cards" => new DiscountCardsPage(),
             _ => host.Content
         };
 
@@ -122,6 +123,7 @@ public partial class DashboardWindow : Window
         var navCustomers = this.FindControl<Border>("NavCustomers");
         var navSuppliers = this.FindControl<Border>("NavSuppliers");
         var navReports = this.FindControl<Border>("NavReports");
+        var navDiscountCards = this.FindControl<Border>("NavDiscountCards");
 
         if (navDashboard is not null) navDashboard.Classes.Set("selected", route == "Dashboard");
         if (navOrders is not null) navOrders.Classes.Set("selected", route == "Orders");
@@ -130,6 +132,7 @@ public partial class DashboardWindow : Window
         if (navCustomers is not null) navCustomers.Classes.Set("selected", route == "Customers");
         if (navSuppliers is not null) navSuppliers.Classes.Set("selected", route == "Suppliers");
         if (navReports is not null) navReports.Classes.Set("selected", route == "Reports");
+        if (navDiscountCards is not null) navDiscountCards.Classes.Set("selected", route == "Discount Cards");
     }
 
     private void SignOut_PointerPressed(object? sender, PointerPressedEventArgs e)
