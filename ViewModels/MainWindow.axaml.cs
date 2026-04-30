@@ -32,9 +32,9 @@ public partial class MainWindow : Window
                     return;
                 }
 
-                bool isValid = authService.Login(username, password);
+                var user = authService.Login(username, password);
 
-                if (isValid)
+                if (user is not null)
                 {
                     var dashboard = new DashboardWindow();
                     dashboard.Show();
