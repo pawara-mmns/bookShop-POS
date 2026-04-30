@@ -32,9 +32,9 @@ public partial class MainWindow : Window
                     return;
                 }
 
-                var user = authService.Login(username, password);
+                bool ok = authService.TryLogin(username, password, out _, out var error);
 
-                if (user is not null)
+                if (ok)
                 {
                     var dashboard = new DashboardWindow();
                     dashboard.Show();
@@ -43,7 +43,7 @@ public partial class MainWindow : Window
                 }
                 else
                 {
-                    resultText.Text = "Invalid username or password.";
+                    resultText.Text = error;
                 }
             };
         }
