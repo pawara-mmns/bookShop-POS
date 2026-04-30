@@ -20,6 +20,7 @@ public class AppDbContext : DbContext
     public DbSet<Orders> Orders => Set<Orders>();
     public DbSet<OrderDetails> OrderDetails => Set<OrderDetails>();
     public DbSet<Notification> Notifications => Set<Notification>();
+    public DbSet<DiscountCards> DiscountCards => Set<DiscountCards>();
 
     private const string ConnectionString = "server=localhost;port=3306;database=bookshopdb;user=root;password=1234";
 
@@ -35,6 +36,10 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<DiscountCards>()
+            .HasIndex(d => d.Code)
+            .IsUnique();
 
         modelBuilder.Entity<Orders>()
             .HasMany(o => o.Details)
