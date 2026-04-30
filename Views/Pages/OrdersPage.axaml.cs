@@ -32,7 +32,8 @@ public partial class OrdersPage : UserControl
                     CustomerId = o.CustomerId,
                     CreatedAt = o.CreatedAt,
                     PaymentMethod = o.PaymentMethod,
-                    Subtotal = o.Subtotal
+                    Subtotal = o.Subtotal,
+                    DiscountAmount = o.DiscountAmount
                 })
                 .ToList();
 
@@ -56,6 +57,7 @@ public class OrderRow
     public DateTime CreatedAt { get; set; }
     public string PaymentMethod { get; set; } = "";
     public decimal Subtotal { get; set; }
+    public decimal DiscountAmount { get; set; }
 
     public string DisplayOrderId => $"OR-{OrderId:000}";
 
@@ -71,5 +73,17 @@ public class OrderRow
         }
     }
 
-    public string DisplaySubtotal => $"LKR {Subtotal.ToString("0.00", CultureInfo.InvariantCulture)}";
+    private decimal NetSubtotal
+    {
+        get
+        {
+            var net = Math.Round(Subtotal - DiscountAmount, 2, MidpointRounding.AwayFromZero);
+            return net < 0 ? 0m : net;
+        }
+    }
+
+    public string DisplayDiscount => $"LKR {DiscountAmount.ToString("0.00", CultureInfo.InvariantCulture)}";
+
+    // Requirement: show subtotal after discount in the table
+    public string DisplaySubtotal => $"LKR {NetSubtotal.ToString("0.00", CultureInfo.InvariantCulture)}";
 }
