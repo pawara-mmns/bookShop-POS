@@ -17,9 +17,34 @@ public static class DatabaseInitializer
             context.Users.Add(new User
             {
                 userName = "admin",
-                password = "1234"
+                password = "1234",
+                role = "Admin",
+                canUsePosBilling = true,
+                canViewDashboard = true,
+                canViewOrders = true,
+                canViewInventory = true,
+                canViewCustomers = true,
+                canViewSuppliers = true,
+                canViewReports = true,
+                canManageDiscountCards = true
             });
 
+            context.SaveChanges();
+        }
+
+        // Backfill after migrations for existing databases
+        var admin = context.Users.FirstOrDefault(u => u.userName == "admin");
+        if (admin is not null && admin.role != "Admin")
+        {
+            admin.role = "Admin";
+            admin.canUsePosBilling = true;
+            admin.canViewDashboard = true;
+            admin.canViewOrders = true;
+            admin.canViewInventory = true;
+            admin.canViewCustomers = true;
+            admin.canViewSuppliers = true;
+            admin.canViewReports = true;
+            admin.canManageDiscountCards = true;
             context.SaveChanges();
         }
     }
