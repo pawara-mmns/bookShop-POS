@@ -340,11 +340,52 @@ public partial class PosBillingPage : UserControl
         ClearError();
 
         var box = this.FindControl<TextBox>("DiscountCodeBox");
-        _discountCode = (box?.Text ?? "").Trim();
+        var code = (box?.Text ?? "").Trim().ToUpperInvariant();
 
-        // UX only for now: we store the code but keep amount at 0.00
+        _discountCode = string.IsNullOrWhiteSpace(code) ? null : code;
         _discountAmount = 0m;
-        RefreshTotals();
+
+        if (string.IsNullOrWhiteSpace(code))
+        {
+            RefreshTotals();
+            return;
+        }
+
+        if (_orderLines.Count == 0)
+        {
+            SetError("Add at least one item before applying a discount.");
+            RefreshTotals();
+            return;
+        }
+
+        try
+        {
+            using var context = new AppDbContext();
+            var card = context.DiscountCards.FirstOrDefault(d => d.Code == code && d.IsActive);
+
+            if (card is null || (card.ExpiresAt.HasValue && card.ExpiresAt.Value <= DateTime.UtcNow))
+            {
+                SetError("Invalid or expired discount code.");
+                RefreshTotals();
+                return;
+            }
+
+            var subtotal = _orderLines.Sum(l => l.LineTotal);
+            decimal discount = card.Type == DiscountCardType.Percentage
+                ? Math.Round(subtotal * (card.Value / 100m), 2, MidpointRounding.AwayFromZero)
+                : card.Value;
+
+            if (discount < 0) discount = 0m;
+            if (discount > subtotal) discount = subtotal;
+
+            _discountAmount = discount;
+            RefreshTotals();
+        }
+        catch (Exception)
+        {
+            SetError("Failed to apply discount.");
+            RefreshTotals();
+        }
     }
 
     private void PaymentCard_Click(object? sender, RoutedEventArgs e)
