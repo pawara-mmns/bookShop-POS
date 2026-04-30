@@ -58,6 +58,8 @@ public partial class EditCashierWindow : Window
                     cb.IsChecked = value;
             }
 
+            SetCheck("ActiveCheck", user.isActive);
+
             SetCheck("DashboardCheck", user.canViewDashboard);
             SetCheck("OrdersCheck", user.canViewOrders);
             SetCheck("InventoryCheck", user.canViewInventory);
@@ -109,6 +111,7 @@ public partial class EditCashierWindow : Window
             bool GetCheck(string name)
                 => this.FindControl<CheckBox>(name)?.IsChecked ?? false;
 
+            user.isActive = GetCheck("ActiveCheck");
             user.canUsePosBilling = true;
             user.canViewDashboard = GetCheck("DashboardCheck");
             user.canViewOrders = GetCheck("OrdersCheck");
