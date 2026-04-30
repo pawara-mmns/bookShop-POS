@@ -99,6 +99,13 @@
                                 <TextBlock Text="Reports" FontSize="14" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
+
+                        <Border x:Name="NavDiscountCards" Classes="nav-item" Tag="Discount Cards" PointerPressed="NavItem_PointerPressed">
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <svg:Svg Path="/Assets/Icons/sales.svg" />
+                                <TextBlock Text="Discount Cards" FontSize="14" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
                     </StackPanel>
                 </ScrollViewer>
 
